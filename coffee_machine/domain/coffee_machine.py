@@ -37,4 +37,4 @@ class CoffeeMachine:
 
     @staticmethod
     def _drink_price(drink_type: DrinkType):
-        return 40
+        return 60
