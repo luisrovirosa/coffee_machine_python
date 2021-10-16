@@ -4,5 +4,5 @@ from coffee_machine.domain.drink_type import DrinkType
 
 @dataclass
 class Drink:
-   type: DrinkType = DrinkType.Coffee
-   sugar: int = 0
+   type: DrinkType
+   sugar: int
