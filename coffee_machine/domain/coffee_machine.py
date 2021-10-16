@@ -23,6 +23,9 @@ class CoffeeMachine:
     def add_two_sugar(self):
         self.sugar_level = 2
 
+    def add_money(self, cents: int):
+        pass
+
     def _prepare_drink(self, drink: DrinkType):
         self.drink_maker.prepare(Drink(drink=drink, sugar=self.sugar_level))
         self.sugar_level = 0
