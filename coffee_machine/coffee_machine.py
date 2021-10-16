@@ -6,7 +6,6 @@ class CoffeeMachine:
    def __init__(self, drink_maker: DrinkMaker) -> None:
       self.drink_maker = drink_maker
       self.current_drink = Drink()
-      self.sugar = 0
 
    def prepare_coffee(self):
       if self.current_drink.sugar == 0:
@@ -35,13 +34,10 @@ class CoffeeMachine:
 
    def add_one_sugar(self):
       self.current_drink.sugar = 1
-      self.sugar = 1
 
    def add_two_sugar(self):
       self.current_drink.sugar = 2
-      self.sugar = 2
 
    def _prepare_drink(self, command):
       self.drink_maker.execute(command)
       self.current_drink.sugar = 0
-      self.sugar = 0
