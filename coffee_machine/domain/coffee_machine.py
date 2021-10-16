@@ -1,6 +1,7 @@
 from coffee_machine.domain.drink import Drink
 from coffee_machine.domain.drink_maker import DrinkMaker
 from coffee_machine.domain.drink_type import DrinkType
+from coffee_machine.domain.price_list import PriceList
 
 
 class CoffeeMachine:
@@ -38,9 +39,5 @@ class CoffeeMachine:
 
     @staticmethod
     def _drink_price(drink_type: DrinkType):
-        prices = {
-            DrinkType.Coffee: 60,
-            DrinkType.Tea: 40,
-            DrinkType.Chocolate: 50,
-        }
-        return prices.get(drink_type,100)
+        return PriceList().price_of(drink_type)
+
