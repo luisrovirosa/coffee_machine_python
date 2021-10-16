@@ -37,4 +37,7 @@ class CoffeeMachine:
 
     @staticmethod
     def _drink_price(drink_type: DrinkType):
-        return 60
+        prices = {
+            DrinkType.Coffee: 60,
+        }
+        return prices.get(drink_type,100)
