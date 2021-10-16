@@ -88,7 +88,9 @@ class TestCoffeeMachineGoingIntoBusiness:
         expect(self.drink_maker.execute).not_to(have_been_called_with('C::'))
 
     @pytest.mark.parametrize('money,missing_cents', [
-        (0, 40)
+        (0, 40),
+        (10, 30),
+        (39, 1),
     ])
     def test_coffee_shows_the_missing_money_when_there_is_no_enough_money(self, money: int, missing_cents: int):
         self.coffee_machine.add_money(money)
