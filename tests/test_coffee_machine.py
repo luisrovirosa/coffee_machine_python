@@ -111,9 +111,14 @@ class TestCoffeeMachineGoingIntoBusiness:
 
         expect(self.drink_maker.execute).to(have_been_called_with(f'C::'))
 
-    def test_no_message_is_displayed_when_there_is_enough_money(self):
+    @pytest.mark.parametrize('prepare_drink', [
+        (prepare_coffee),
+        (prepare_tea),
+        (prepare_chocolate),
+    ])
+    def test_no_message_is_displayed_when_there_is_enough_money(self, prepare_drink: callable):
         self.coffee_machine.add_money(100)
-        self.coffee_machine.prepare_coffee()
+        prepare_drink(self.coffee_machine)
 
         expect(self.drink_maker.execute).to(have_been_called.once)
 
