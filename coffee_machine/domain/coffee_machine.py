@@ -9,6 +9,7 @@ class CoffeeMachine:
         self.drink_maker = drink_maker
         self.drink_maker_adapter = CheapDrinkMakerAdapter(drink_maker)
         self.current_drink = Drink()
+        self.sugar_level = 0
 
     def prepare_coffee(self):
         self.current_drink.drink = DrinkType.Coffee
@@ -23,11 +24,12 @@ class CoffeeMachine:
         self._prepare_drink()
 
     def add_one_sugar(self):
-        self.current_drink.sugar = 1
+        self.sugar_level = 1
 
     def add_two_sugar(self):
-        self.current_drink.sugar = 2
+        self.sugar_level = 2
 
     def _prepare_drink(self):
+        self.current_drink.sugar = self.sugar_level
         self.drink_maker_adapter.prepare(self.current_drink)
-        self.current_drink.sugar = 0
+        self.sugar_level = 0
