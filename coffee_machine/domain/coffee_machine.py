@@ -8,7 +8,6 @@ class CoffeeMachine:
     def __init__(self, drink_maker: CheapDrinkMaker) -> None:
         self.drink_maker = drink_maker
         self.drink_maker_adapter = CheapDrinkMakerAdapter(drink_maker)
-        self.current_drink = Drink()
         self.sugar_level = 0
 
     def prepare_coffee(self):
@@ -27,7 +26,5 @@ class CoffeeMachine:
         self.sugar_level = 2
 
     def _prepare_drink(self, drink: DrinkType):
-        self.current_drink.drink = drink
-        self.current_drink.sugar = self.sugar_level
-        self.drink_maker_adapter.prepare(self.current_drink)
+        self.drink_maker_adapter.prepare(Drink(drink=drink, sugar=self.sugar_level))
         self.sugar_level = 0
