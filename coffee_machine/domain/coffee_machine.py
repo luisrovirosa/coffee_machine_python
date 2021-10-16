@@ -12,6 +12,8 @@ class CoffeeMachine:
     def prepare_coffee(self):
         if (self.money_in_cents != 0):
             self._prepare_drink(DrinkType.Coffee)
+        else:
+            self.drink_maker.communicate('You need to add 40 cents')
 
     def prepare_tea(self):
         if (self.money_in_cents != 0):

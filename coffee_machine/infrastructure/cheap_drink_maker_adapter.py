@@ -13,6 +13,9 @@ class CheapDrinkMakerAdapter(DrinkMaker):
         command = f"{self._drink(drink)}:{self._sugar(drink)}:{self._stick(drink)}"
         self.cheap_drink_maker.execute(command)
 
+    def communicate(self, message: str):
+        self.cheap_drink_maker.execute(f"M:{message}")
+
     def _prepare_drink(self, command) -> None:
        self.cheap_drink_maker.execute(command)
 

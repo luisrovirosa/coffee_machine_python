@@ -86,6 +86,11 @@ class TestCoffeeMachineGoingIntoBusiness:
 
         expect(self.drink_maker.execute).not_to(have_been_called_with('C::'))
 
+    def test_coffee_shows_the_missing_money_when_there_is_no_enough_money(self):
+        self.coffee_machine.prepare_coffee()
+
+        expect(self.drink_maker.execute).to(have_been_called_with('M:You need to add 40 cents'))
+
     def test_tea_is_not_served_if_no_money_is_added(self):
         self.coffee_machine.prepare_tea()
 

@@ -7,3 +7,7 @@ class DrinkMaker(ABC):
     @abstractmethod
     def prepare(self, drink: Drink):
         raise NotImplemented()
+
+    @abstractmethod
+    def communicate(self, message: str):
+        raise NotImplemented()
