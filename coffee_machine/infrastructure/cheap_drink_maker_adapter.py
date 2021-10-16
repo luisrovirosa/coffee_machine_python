@@ -13,9 +13,9 @@ class CheapDrinkMakerAdapter(DrinkMaker):
         if drink.sugar == 0:
             self._prepare_drink(f"{self._drink(drink)}:{self._sugar(drink)}:")
         elif drink.sugar == 1:
-            self._prepare_drink(f"{self._drink(drink)}:1:0")
+            self._prepare_drink(f"{self._drink(drink)}:{self._sugar(drink)}:0")
         elif drink.sugar == 2:
-            self._prepare_drink(f"{self._drink(drink)}:2:0")
+            self._prepare_drink(f"{self._drink(drink)}:{self._sugar(drink)}:0")
 
     def _prepare_drink(self, command):
        self.cheap_drink_maker.execute(command)
@@ -31,5 +31,8 @@ class CheapDrinkMakerAdapter(DrinkMaker):
 
     @staticmethod
     def _sugar(drink: Drink):
-        return ''
+        if drink.sugar == 0:
+            return ''
+        else:
+            return drink.sugar
 
