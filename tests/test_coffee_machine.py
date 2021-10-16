@@ -8,7 +8,6 @@ from coffee_machine.domain.drink_maker import DrinkMaker
 from coffee_machine.infrastructure.cheap_drink_maker import CheapDrinkMaker
 from coffee_machine.infrastructure.cheap_drink_maker_adapter import CheapDrinkMakerAdapter
 
-
 class TestCoffeeMachinePreparesProducts:
 
     def setup(self):
@@ -79,6 +78,10 @@ class TestCoffeeMachinePreparesProducts:
         expect(self.drink_maker.execute).to(have_been_called_with('C::'))
 
 class TestCoffeeMachineGoingIntoBusiness:
+    CHOCOLATE_PRICE = 50
+    TEA_PRICE = 40
+    COFFEE_PRICE = 60
+
     def setup(self):
         self.adapter = Spy(DrinkMaker)
         self.coffee_machine = CoffeeMachine(self.adapter)
@@ -103,9 +106,9 @@ class TestCoffeeMachineGoingIntoBusiness:
         expect(self.adapter.prepare).not_to(have_been_called)
 
     @pytest.mark.parametrize('prepare_drink,money', [
-        (prepare_coffee, 60),
-        (prepare_tea, 40),
-        (prepare_chocolate, 50),
+        (prepare_coffee, COFFEE_PRICE),
+        (prepare_tea, TEA_PRICE),
+        (prepare_chocolate, CHOCOLATE_PRICE),
         (prepare_coffee, 100),
         (prepare_tea, 100),
         (prepare_chocolate, 100),
@@ -128,11 +131,10 @@ class TestCoffeeMachineGoingIntoBusiness:
         expect(self.adapter.communicate).not_to(have_been_called)
 
     @pytest.mark.parametrize('prepare_drink,money,missing_cents', [
-        (prepare_coffee, 0, 60),
-        (prepare_coffee, 10, 50),
+        (prepare_coffee, 0, COFFEE_PRICE),
         (prepare_coffee, 59, 1),
-        (prepare_chocolate, 0, 50),
-        (prepare_tea, 0, 40),
+        (prepare_chocolate, 0, CHOCOLATE_PRICE),
+        (prepare_tea, 0, TEA_PRICE),
     ])
     def test_shows_the_missing_money_when_there_is_no_enough_money(self, prepare_drink: callable, money: int, missing_cents: int):
         self.coffee_machine.add_money(money)
@@ -142,9 +144,9 @@ class TestCoffeeMachineGoingIntoBusiness:
 
 
     @pytest.mark.parametrize('prepare_drink,missing_cents', [
-        (prepare_coffee, 60),
-        (prepare_tea, 40),
-        (prepare_chocolate, 50),
+        (prepare_coffee, COFFEE_PRICE),
+        (prepare_tea, TEA_PRICE),
+        (prepare_chocolate, CHOCOLATE_PRICE),
     ])
     def test_each_user_needs_to_add_money(self, prepare_drink: callable, missing_cents: int):
         self.coffee_machine.add_money(100)
