@@ -101,11 +101,13 @@ class TestCoffeeMachineGoingIntoBusiness:
 
         expect(self.drink_maker.execute).not_to(have_been_called_with('C::'))
 
-    @pytest.mark.parametrize('money', [
-        (40),
-        (100),
+    @pytest.mark.parametrize('prepare_drink,money', [
+        (prepare_coffee, 40),
+        (prepare_coffee, 100),
+        (prepare_tea, 100),
+        (prepare_chocolate, 100),
     ])
-    def test_coffee_is_prepared_when_there_is_enough_money(self, money: int):
+    def test_drinks_are_prepared_when_there_is_enough_money(self, prepare_drink: callable, money: int):
         self.coffee_machine.add_money(money)
         self.coffee_machine.prepare_coffee()
 
