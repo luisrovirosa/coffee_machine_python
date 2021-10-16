@@ -1,20 +1,17 @@
 from coffee_machine.domain.drink import Drink
 from coffee_machine.infrastructure.cheap_drink_maker import CheapDrinkMaker
+from coffee_machine.infrastructure.cheap_drink_maker_adapter import CheapDrinkMakerAdapter
 
 
 class CoffeeMachine:
    def __init__(self, drink_maker: CheapDrinkMaker) -> None:
       self.drink_maker = drink_maker
+      self.drink_maker_adapter = CheapDrinkMakerAdapter(drink_maker)
       self.current_drink = Drink()
 
    def prepare_coffee(self):
-      if self.current_drink.sugar == 0:
-         command = 'C::'
-      elif self.current_drink.sugar == 1:
-         command = 'C:1:0'
-      elif self.current_drink.sugar == 2:
-         command = 'C:2:0'
-      self._prepare_drink(command)
+      self.drink_maker_adapter.prepare(self.current_drink)
+      self.current_drink.sugar = 0
 
    def prepare_tea(self):
       if self.current_drink.sugar == 0:
