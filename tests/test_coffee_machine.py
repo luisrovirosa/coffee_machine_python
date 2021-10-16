@@ -1,9 +1,10 @@
 import pytest
-from doublex import Spy
+from doublex import Spy, ProxySpy
 from doublex_expects import have_been_called_with, have_been_called
 from expects import expect, start_with
 
 from coffee_machine import CoffeeMachine
+from coffee_machine.domain.drink_maker import DrinkMaker
 from coffee_machine.infrastructure.cheap_drink_maker import CheapDrinkMaker
 from coffee_machine.infrastructure.cheap_drink_maker_adapter import CheapDrinkMakerAdapter
 
@@ -79,8 +80,7 @@ class TestCoffeeMachinePreparesProducts:
 
 class TestCoffeeMachineGoingIntoBusiness:
     def setup(self):
-        self.drink_maker = Spy(CheapDrinkMaker)
-        self.adapter = CheapDrinkMakerAdapter(self.drink_maker)
+        self.adapter = Spy(DrinkMaker)
         self.coffee_machine = CoffeeMachine(self.adapter)
 
     def prepare_coffee(coffee_machine: CoffeeMachine):
@@ -100,7 +100,7 @@ class TestCoffeeMachineGoingIntoBusiness:
     def test_drinks_are_not_served_if_no_money_is_added(self, prepare_drink: callable):
         prepare_drink(self.coffee_machine)
 
-        expect(self.drink_maker.execute).not_to(have_been_called_with('C::'))
+        expect(self.adapter.prepare).not_to(have_been_called)
 
     @pytest.mark.parametrize('prepare_drink,money', [
         (prepare_coffee, 60),
@@ -114,7 +114,7 @@ class TestCoffeeMachineGoingIntoBusiness:
         self.coffee_machine.add_money(money)
         prepare_drink(self.coffee_machine)
 
-        expect(self.drink_maker.execute).not_to(have_been_called_with(start_with('M')))
+        expect(self.adapter.prepare).to(have_been_called)
 
     @pytest.mark.parametrize('prepare_drink', [
         (prepare_coffee),
@@ -125,7 +125,7 @@ class TestCoffeeMachineGoingIntoBusiness:
         self.coffee_machine.add_money(100)
         prepare_drink(self.coffee_machine)
 
-        expect(self.drink_maker.execute).to(have_been_called.once)
+        expect(self.adapter.communicate).not_to(have_been_called)
 
     @pytest.mark.parametrize('prepare_drink,money,missing_cents', [
         (prepare_coffee, 0, 60),
@@ -138,7 +138,7 @@ class TestCoffeeMachineGoingIntoBusiness:
         self.coffee_machine.add_money(money)
         prepare_drink(self.coffee_machine)
 
-        expect(self.drink_maker.execute).to(have_been_called_with(f'M:You need to add {missing_cents} cents'))
+        expect(self.adapter.communicate).to(have_been_called_with(f'You need to add {missing_cents} cents'))
 
 
     @pytest.mark.parametrize('prepare_drink', [
@@ -152,4 +152,6 @@ class TestCoffeeMachineGoingIntoBusiness:
 
         prepare_drink(self.coffee_machine)
 
-        expect(self.drink_maker.execute).to(have_been_called_with(start_with('M:You need to add')))
+        expect(self.adapter.prepare).to(have_been_called.once)
+        expect(self.adapter.communicate).to(have_been_called)
+
