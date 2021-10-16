@@ -72,6 +72,7 @@ class TestCoffeeMachinePreparesProducts:
         self.coffee_machine.add_two_sugar()
         self.coffee_machine.prepare_coffee()
 
+        self.coffee_machine.add_money(100)
         self.coffee_machine.prepare_coffee()
 
         expect(self.drink_maker.execute).to(have_been_called_with('C::'))
@@ -138,3 +139,17 @@ class TestCoffeeMachineGoingIntoBusiness:
         prepare_drink(self.coffee_machine)
 
         expect(self.drink_maker.execute).to(have_been_called_with(f'M:You need to add {missing_cents} cents'))
+
+
+    @pytest.mark.parametrize('prepare_drink', [
+        (prepare_coffee),
+        (prepare_tea),
+        (prepare_chocolate),
+    ])
+    def test_each_user_needs_to_add_money(self, prepare_drink: callable):
+        self.coffee_machine.add_money(100)
+        prepare_drink(self.coffee_machine)
+
+        prepare_drink(self.coffee_machine)
+
+        expect(self.drink_maker.execute).to(have_been_called_with(start_with('M:You need to add')))

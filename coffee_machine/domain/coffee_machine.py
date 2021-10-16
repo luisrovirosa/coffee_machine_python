@@ -32,6 +32,7 @@ class CoffeeMachine:
         if missing_money <= 0:
             self.drink_maker.prepare(Drink(type=drink_type, sugar=self.sugar_level))
             self.sugar_level = 0
+            self.money_in_cents = 0
         else:
             self.drink_maker.communicate(f'You need to add {missing_money} cents')
 
