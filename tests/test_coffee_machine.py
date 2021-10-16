@@ -8,27 +8,22 @@ from coffee_machine.drink_maker import DrinkMaker
 
 class TestCoffeeMachine:
 
+    def setup(self):
+        self.drink_maker = Spy(DrinkMaker)
+        self.coffee_machine = CoffeeMachine(self.drink_maker)
+
     def test_prepare_a_coffee_without_sugar_when_coffee_is_pressed(self):
-        drink_maker = Spy(DrinkMaker)
-        coffee_machine = CoffeeMachine(drink_maker)
+        self.coffee_machine.prepare_coffee()
 
-        coffee_machine.prepare_coffee()
-
-        expect(drink_maker.execute).to(have_been_called_with('C::'))
+        expect(self.drink_maker.execute).to(have_been_called_with('C::'))
 
     def test_prepare_a_tea_without_sugar_when_tea_is_pressed(self):
-        drink_maker = Spy(DrinkMaker)
-        coffee_machine = CoffeeMachine(drink_maker)
+        self.coffee_machine.prepare_tea()
 
-        coffee_machine.prepare_tea()
-
-        expect(drink_maker.execute).to(have_been_called_with('T::'))
+        expect(self.drink_maker.execute).to(have_been_called_with('T::'))
 
 
     def test_prepare_a_chocolate_without_sugar_when_chocolate_is_pressed(self):
-        drink_maker = Spy(DrinkMaker)
-        coffee_machine = CoffeeMachine(drink_maker)
+        self.coffee_machine.prepare_chocolate()
 
-        coffee_machine.prepare_chocolate()
-
-        expect(drink_maker.execute).to(have_been_called_with('H::'))
+        expect(self.drink_maker.execute).to(have_been_called_with('H::'))
