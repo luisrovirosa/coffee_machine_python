@@ -1,6 +1,6 @@
 import pytest
 from doublex import Spy
-from doublex_expects import have_been_called_with
+from doublex_expects import have_been_called_with, have_been_called
 from expects import expect
 
 from coffee_machine import CoffeeMachine
@@ -96,6 +96,12 @@ class TestCoffeeMachineGoingIntoBusiness:
         self.coffee_machine.prepare_coffee()
 
         expect(self.drink_maker.execute).to(have_been_called_with(f'C::'))
+
+    def test_no_message_is_displayed_when_there_is_enough_money(self):
+        self.coffee_machine.add_money(100)
+        self.coffee_machine.prepare_coffee()
+
+        expect(self.drink_maker.execute).to(have_been_called.once)
 
     @pytest.mark.parametrize('money,missing_cents', [
         (0, 40),
