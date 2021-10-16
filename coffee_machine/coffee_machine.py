@@ -8,3 +8,6 @@ class CoffeeMachine:
 
    def prepare_coffee(self):
       self.drink_maker.execute('C::')
+
+   def prepare_tea(self):
+      self.drink_maker.execute('T::')
