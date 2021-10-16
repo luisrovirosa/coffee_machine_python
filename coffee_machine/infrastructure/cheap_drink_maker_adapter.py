@@ -11,7 +11,7 @@ class CheapDrinkMakerAdapter(DrinkMaker):
 
     def prepare(self, drink: Drink):
         if drink.sugar == 0:
-            self._prepare_drink(f"{self._drink(drink)}::")
+            self._prepare_drink(f"{self._drink(drink)}:{self._sugar(drink)}:")
         elif drink.sugar == 1:
             self._prepare_drink(f"{self._drink(drink)}:1:0")
         elif drink.sugar == 2:
@@ -28,4 +28,8 @@ class CheapDrinkMakerAdapter(DrinkMaker):
             DrinkType.Chocolate: 'H',
         }
         return drink_codes[drink.drink]
+
+    @staticmethod
+    def _sugar(drink: Drink):
+        return ''
 
