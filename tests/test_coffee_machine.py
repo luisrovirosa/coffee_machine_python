@@ -82,8 +82,13 @@ class TestCoffeeMachineGoingIntoBusiness:
         self.adapter = CheapDrinkMakerAdapter(self.drink_maker)
         self.coffee_machine = CoffeeMachine(self.adapter)
 
-    def test_coffee_is_not_served_if_no_money_is_added(self):
-        self.coffee_machine.prepare_coffee()
+    @pytest.mark.parametrize('product,prepare_drink', [
+        ('coffee', lambda coffee_machine: coffee_machine.prepare_coffee()),
+        ('tea', lambda coffee_machine: coffee_machine.prepare_tea()),
+        ('chocolate', lambda coffee_machine: coffee_machine.prepare_chocolate()),
+    ])
+    def test_drinks_are_not_served_if_no_money_is_added(self, product: str, prepare_drink: callable):
+        prepare_drink(self.coffee_machine)
 
         expect(self.drink_maker.execute).not_to(have_been_called_with('C::'))
 
@@ -113,15 +118,3 @@ class TestCoffeeMachineGoingIntoBusiness:
         self.coffee_machine.prepare_coffee()
 
         expect(self.drink_maker.execute).to(have_been_called_with(f'M:You need to add {missing_cents} cents'))
-
-    def test_tea_is_not_served_if_no_money_is_added(self):
-        self.coffee_machine.prepare_tea()
-
-        expect(self.drink_maker.execute).not_to(have_been_called_with('T::'))
-
-    def test_chocolate_is_not_served_if_no_money_is_added(self):
-        self.coffee_machine.prepare_chocolate()
-
-        expect(self.drink_maker.execute).not_to(have_been_called_with('H::'))
-
-
