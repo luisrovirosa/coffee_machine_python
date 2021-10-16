@@ -100,6 +100,13 @@ class TestCoffeeMachine:
 
         expect(self.drink_maker.execute).not_to(have_been_called_with('C::'))
 
+    def test_tea_is_not_served_if_no_money_is_added(self):
+        coffee_machine = CoffeeMachine(self.adapter)
+
+        coffee_machine.prepare_tea()
+
+        expect(self.drink_maker.execute).not_to(have_been_called_with('T::'))
+
 
     def _coffee_machine_with_enough_money(self) -> CoffeeMachine:
         coffee_machine = CoffeeMachine(self.adapter)

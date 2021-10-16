@@ -14,7 +14,8 @@ class CoffeeMachine:
             self._prepare_drink(DrinkType.Coffee)
 
     def prepare_tea(self):
-        self._prepare_drink(DrinkType.Tea)
+        if (self.money_in_cents != 0):
+            self._prepare_drink(DrinkType.Tea)
 
     def prepare_chocolate(self):
         self._prepare_drink(DrinkType.Chocolate)
