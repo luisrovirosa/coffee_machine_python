@@ -6,7 +6,11 @@ from coffee_machine.domain.price_list import PriceList
 
 class CoffeeMachine:
     def __init__(self, drink_maker: DrinkMaker) -> None:
-        self.price_list = PriceList()
+        self.price_list = PriceList({
+            DrinkType.Coffee: 60,
+            DrinkType.Tea: 40,
+            DrinkType.Chocolate: 50,
+        })
         self.drink_maker = drink_maker
         self.sugar_level = 0
         self.money_in_cents = 0
