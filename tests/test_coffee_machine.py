@@ -141,17 +141,17 @@ class TestCoffeeMachineGoingIntoBusiness:
         expect(self.adapter.communicate).to(have_been_called_with(f'You need to add {missing_cents} cents'))
 
 
-    @pytest.mark.parametrize('prepare_drink', [
-        (prepare_coffee),
-        (prepare_tea),
-        (prepare_chocolate),
+    @pytest.mark.parametrize('prepare_drink,missing_cents', [
+        (prepare_coffee, 60),
+        (prepare_tea, 40),
+        (prepare_chocolate, 50),
     ])
-    def test_each_user_needs_to_add_money(self, prepare_drink: callable):
+    def test_each_user_needs_to_add_money(self, prepare_drink: callable, missing_cents: int):
         self.coffee_machine.add_money(100)
         prepare_drink(self.coffee_machine)
 
         prepare_drink(self.coffee_machine)
 
         expect(self.adapter.prepare).to(have_been_called.once)
-        expect(self.adapter.communicate).to(have_been_called)
+        expect(self.adapter.communicate).to(have_been_called_with(f'You need to add {missing_cents} cents'))
 
