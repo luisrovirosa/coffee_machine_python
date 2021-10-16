@@ -40,5 +40,6 @@ class CoffeeMachine:
         prices = {
             DrinkType.Coffee: 60,
             DrinkType.Tea: 40,
+            DrinkType.Chocolate: 50,
         }
         return prices.get(drink_type,100)
