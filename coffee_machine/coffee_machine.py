@@ -1,9 +1,11 @@
+from coffee_machine.drink import Drink
 from coffee_machine.drink_maker import DrinkMaker
 
 
 class CoffeeMachine:
    def __init__(self, drink_maker: DrinkMaker) -> None:
       self.drink_maker = drink_maker
+      self.current_drink = Drink()
       self.sugar = 0
 
    def prepare_coffee(self):
