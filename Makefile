@@ -4,6 +4,11 @@ default: docker-test
 test:
 	pytest
 
+mutation:
+	mutmut run --paths-to-mutate coffee_machine || true
+	mutmut html
+	@echo "See the results in html/index.html"
+
 coverage:
 	coverage run --source=coffee_machine -m unittest
 	coverage report
@@ -15,3 +20,6 @@ docker-test:
 
 docker-coverage:
 	@docker run --rm -v ${PWD}:/kata codiumteam/tdd-training-python make coverage
+
+docker-mutation:
+	@docker run --rm -v ${PWD}:/kata codiumteam/tdd-training-python make mutation
