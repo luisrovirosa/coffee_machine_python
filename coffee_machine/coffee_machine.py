@@ -7,10 +7,12 @@ class CoffeeMachine:
       self.sugar = 0
 
    def prepare_coffee(self):
-      if self.sugar != 1:
+      if self.sugar == 0:
          self.drink_maker.execute('C::')
-      else:
+      elif self.sugar == 1:
          self.drink_maker.execute('C:1:0')
+      elif self.sugar == 2:
+         self.drink_maker.execute('C:2:0')
 
    def prepare_tea(self):
       self.drink_maker.execute('T::')
@@ -20,3 +22,6 @@ class CoffeeMachine:
 
    def add_one_sugar(self):
       self.sugar = 1
+
+   def add_two_sugar(self):
+      self.sugar = 2
