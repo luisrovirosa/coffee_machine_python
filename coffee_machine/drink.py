@@ -1,2 +1,6 @@
+from dataclasses import dataclass
+
+
+@dataclass
 class Drink:
-   pass
+   sugar: int = 0
