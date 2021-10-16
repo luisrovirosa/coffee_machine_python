@@ -4,70 +4,68 @@ from doublex_expects import have_been_called_with, have_been_called
 from expects import expect
 
 from coffee_machine import CoffeeMachine
+from coffee_machine.domain.drink import Drink
 from coffee_machine.domain.drink_maker import DrinkMaker
-from coffee_machine.infrastructure.cheap_drink_maker import CheapDrinkMaker
-from coffee_machine.infrastructure.cheap_drink_maker_adapter import CheapDrinkMakerAdapter
+from coffee_machine.domain.drink_type import DrinkType
 
 
 class TestCoffeeMachinePreparesProducts:
 
     def setup(self):
-        self.drink_maker = Spy(CheapDrinkMaker)
-        self.adapter = CheapDrinkMakerAdapter(self.drink_maker)
+        self.adapter = Spy(DrinkMaker)
         self.coffee_machine = CoffeeMachine(self.adapter)
         self.coffee_machine.add_money(100)
 
     def test_prepare_a_coffee_without_sugar_when_coffee_is_pressed(self):
         self.coffee_machine.prepare_coffee()
 
-        expect(self.drink_maker.execute).to(have_been_called_with('C::'))
+        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Coffee, 0)))
 
     def test_prepare_a_tea_without_sugar_when_tea_is_pressed(self):
         self.coffee_machine.prepare_tea()
 
-        expect(self.drink_maker.execute).to(have_been_called_with('T::'))
-
+        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Tea, 0)))
 
     def test_prepare_a_chocolate_without_sugar_when_chocolate_is_pressed(self):
         self.coffee_machine.prepare_chocolate()
 
-        expect(self.drink_maker.execute).to(have_been_called_with('H::'))
+        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Chocolate, 0)))
 
     def test_prepare_a_coffee_with_one_sugar_and_stick_when_select_one_sugar_and_coffee_is_pressed(self):
         self.coffee_machine.add_one_sugar()
         self.coffee_machine.prepare_coffee()
 
-        expect(self.drink_maker.execute).to(have_been_called_with('C:1:0'))
+        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Coffee, 1)))
 
     def test_prepare_a_coffee_with_two_sugar_and_stick_when_select_two_sugar_and_coffee_is_pressed(self):
         self.coffee_machine.add_two_sugar()
         self.coffee_machine.prepare_coffee()
 
-        expect(self.drink_maker.execute).to(have_been_called_with('C:2:0'))
+        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Coffee, 2)))
 
     def test_prepare_a_tea_with_one_sugar_and_stick_when_select_one_sugar_and_tea_is_pressed(self):
         self.coffee_machine.add_one_sugar()
         self.coffee_machine.prepare_tea()
 
-        expect(self.drink_maker.execute).to(have_been_called_with('T:1:0'))
+        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Tea, 1)))
 
     def test_prepare_a_tea_with_two_sugar_and_stick_when_select_one_sugar_and_tea_is_pressed(self):
         self.coffee_machine.add_two_sugar()
         self.coffee_machine.prepare_tea()
 
-        expect(self.drink_maker.execute).to(have_been_called_with('T:2:0'))
+        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Tea, 2)))
 
     def test_prepare_a_chocolate_with_one_sugar_and_stick_when_select_one_sugar_and_chocolate_is_pressed(self):
         self.coffee_machine.add_one_sugar()
         self.coffee_machine.prepare_chocolate()
 
-        expect(self.drink_maker.execute).to(have_been_called_with('H:1:0'))
+        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Chocolate, 1)))
 
     def test_prepare_a_chocolate_with_two_sugar_and_stick_when_select_one_sugar_and_chocolate_is_pressed(self):
         self.coffee_machine.add_two_sugar()
         self.coffee_machine.prepare_chocolate()
 
-        expect(self.drink_maker.execute).to(have_been_called_with('H:2:0'))
+        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Chocolate, 2)))
 
     def test_sugar_level_is_not_related_to_previous_drinks(self):
         self.coffee_machine.add_two_sugar()
@@ -76,7 +74,8 @@ class TestCoffeeMachinePreparesProducts:
         self.coffee_machine.add_money(100)
         self.coffee_machine.prepare_coffee()
 
-        expect(self.drink_maker.execute).to(have_been_called_with('C::'))
+        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Coffee, 0)))
+
 
 class TestCoffeeMachineGoingIntoBusiness:
     CHOCOLATE_PRICE = 50
@@ -137,7 +136,8 @@ class TestCoffeeMachineGoingIntoBusiness:
         (prepare_chocolate, 0, CHOCOLATE_PRICE),
         (prepare_tea, 0, TEA_PRICE),
     ])
-    def test_shows_the_missing_money_when_there_is_no_enough_money(self, prepare_drink: callable, money: int, missing_cents: int):
+    def test_shows_the_missing_money_when_there_is_no_enough_money(self, prepare_drink: callable, money: int,
+                                                                   missing_cents: int):
         self.coffee_machine.add_money(money)
         prepare_drink(self.coffee_machine)
 
@@ -166,4 +166,3 @@ class TestCoffeeMachineGoingIntoBusiness:
 
         expect(self.adapter.prepare).to(have_been_called.once)
         expect(self.adapter.communicate).to(have_been_called_with(f'You need to add {missing_cents} cents'))
-
