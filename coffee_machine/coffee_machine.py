@@ -39,3 +39,4 @@ class CoffeeMachine:
 
    def _prepare_drink(self, command):
       self.drink_maker.execute(command)
+      self.sugar = 0

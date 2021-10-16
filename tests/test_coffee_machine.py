@@ -63,3 +63,11 @@ class TestCoffeeMachine:
         self.coffee_machine.prepare_chocolate()
 
         expect(self.drink_maker.execute).to(have_been_called_with('H:2:0'))
+
+    def test_sugar_level_is_not_related_to_previous_drinks(self):
+        self.coffee_machine.add_two_sugar()
+        self.coffee_machine.prepare_coffee()
+
+        self.coffee_machine.prepare_coffee()
+
+        expect(self.drink_maker.execute).to(have_been_called_with('C::'))
