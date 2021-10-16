@@ -28,3 +28,11 @@ class TestCheapDrinkMakerAdapter:
         adapter.prepare(drink)
 
         expect(cheap_drink_maker.execute).to(have_been_called_with(expected_command))
+
+    def test_message_sends_the_command(self):
+        cheap_drink_maker = Spy(CheapDrinkMaker)
+        adapter = CheapDrinkMakerAdapter(cheap_drink_maker)
+
+        adapter.communicate('hello')
+
+        expect(cheap_drink_maker.execute).to(have_been_called_with('M:hello'))
