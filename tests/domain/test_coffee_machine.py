@@ -1,12 +1,13 @@
 import pytest
-from doublex import Spy, ProxySpy
+from doublex import Spy
 from doublex_expects import have_been_called_with, have_been_called
-from expects import expect, start_with
+from expects import expect
 
 from coffee_machine import CoffeeMachine
 from coffee_machine.domain.drink_maker import DrinkMaker
 from coffee_machine.infrastructure.cheap_drink_maker import CheapDrinkMaker
 from coffee_machine.infrastructure.cheap_drink_maker_adapter import CheapDrinkMakerAdapter
+
 
 class TestCoffeeMachinePreparesProducts:
 
