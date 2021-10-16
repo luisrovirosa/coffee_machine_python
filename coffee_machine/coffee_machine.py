@@ -13,26 +13,29 @@ class CoffeeMachine:
          command = 'C:1:0'
       elif self.sugar == 2:
          command = 'C:2:0'
-      self.drink_maker.execute(command)
+      self._prepare_drink(command)
 
    def prepare_tea(self):
       if self.sugar == 0:
-         self.drink_maker.execute('T::')
+         self._prepare_drink('T::')
       elif self.sugar == 1:
-         self.drink_maker.execute('T:1:0')
+         self._prepare_drink('T:1:0')
       elif self.sugar == 2:
-         self.drink_maker.execute('T:2:0')
+         self._prepare_drink('T:2:0')
 
    def prepare_chocolate(self):
       if self.sugar == 0:
-         self.drink_maker.execute('H::')
+         self._prepare_drink('H::')
       elif self.sugar == 1:
-         self.drink_maker.execute('H:1:0')
+         self._prepare_drink('H:1:0')
       elif self.sugar == 2:
-         self.drink_maker.execute('H:2:0')
+         self._prepare_drink('H:2:0')
 
    def add_one_sugar(self):
       self.sugar = 1
 
    def add_two_sugar(self):
       self.sugar = 2
+
+   def _prepare_drink(self, command):
+      self.drink_maker.execute(command)
