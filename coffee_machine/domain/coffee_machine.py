@@ -1,9 +1,9 @@
 from coffee_machine.domain.drink import Drink
-from coffee_machine.infrastructure.drink_maker import DrinkMaker
+from coffee_machine.infrastructure.cheap_drink_maker import CheapDrinkMaker
 
 
 class CoffeeMachine:
-   def __init__(self, drink_maker: DrinkMaker) -> None:
+   def __init__(self, drink_maker: CheapDrinkMaker) -> None:
       self.drink_maker = drink_maker
       self.current_drink = Drink()
 

@@ -3,13 +3,13 @@ from doublex_expects import have_been_called_with
 from expects import expect
 
 from coffee_machine import CoffeeMachine
-from coffee_machine.infrastructure.drink_maker import DrinkMaker
+from coffee_machine.infrastructure.cheap_drink_maker import CheapDrinkMaker
 
 
 class TestCoffeeMachine:
 
     def setup(self):
-        self.drink_maker = Spy(DrinkMaker)
+        self.drink_maker = Spy(CheapDrinkMaker)
         self.coffee_machine = CoffeeMachine(self.drink_maker)
 
     def test_prepare_a_coffee_without_sugar_when_coffee_is_pressed(self):
