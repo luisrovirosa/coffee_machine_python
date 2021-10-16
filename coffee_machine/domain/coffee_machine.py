@@ -5,32 +5,32 @@ from coffee_machine.infrastructure.cheap_drink_maker_adapter import CheapDrinkMa
 
 
 class CoffeeMachine:
-   def __init__(self, drink_maker: CheapDrinkMaker) -> None:
-      self.drink_maker = drink_maker
-      self.drink_maker_adapter = CheapDrinkMakerAdapter(drink_maker)
-      self.current_drink = Drink()
+    def __init__(self, drink_maker: CheapDrinkMaker) -> None:
+        self.drink_maker = drink_maker
+        self.drink_maker_adapter = CheapDrinkMakerAdapter(drink_maker)
+        self.current_drink = Drink()
 
-   def prepare_coffee(self):
-      self.current_drink.drink = DrinkType.Coffee
-      self.drink_maker_adapter.prepare(self.current_drink)
-      self.current_drink.sugar = 0
+    def prepare_coffee(self):
+        self.current_drink.drink = DrinkType.Coffee
+        self.drink_maker_adapter.prepare(self.current_drink)
+        self.current_drink.sugar = 0
 
-   def prepare_tea(self):
-      self.current_drink.drink = DrinkType.Tea
-      self.drink_maker_adapter.prepare(self.current_drink)
-      self.current_drink.sugar = 0
+    def prepare_tea(self):
+        self.current_drink.drink = DrinkType.Tea
+        self.drink_maker_adapter.prepare(self.current_drink)
+        self.current_drink.sugar = 0
 
-   def prepare_chocolate(self):
-      self.current_drink.drink = DrinkType.Chocolate
-      self.drink_maker_adapter.prepare(self.current_drink)
-      self.current_drink.sugar = 0
+    def prepare_chocolate(self):
+        self.current_drink.drink = DrinkType.Chocolate
+        self.drink_maker_adapter.prepare(self.current_drink)
+        self.current_drink.sugar = 0
 
-   def add_one_sugar(self):
-      self.current_drink.sugar = 1
+    def add_one_sugar(self):
+        self.current_drink.sugar = 1
 
-   def add_two_sugar(self):
-      self.current_drink.sugar = 2
+    def add_two_sugar(self):
+        self.current_drink.sugar = 2
 
-   def _prepare_drink(self, command):
-      self.drink_maker.execute(command)
-      self.current_drink.sugar = 0
+    def _prepare_drink(self, command):
+        self.drink_maker.execute(command)
+        self.current_drink.sugar = 0
