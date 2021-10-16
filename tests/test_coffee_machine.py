@@ -82,12 +82,21 @@ class TestCoffeeMachineGoingIntoBusiness:
         self.adapter = CheapDrinkMakerAdapter(self.drink_maker)
         self.coffee_machine = CoffeeMachine(self.adapter)
 
-    @pytest.mark.parametrize('product,prepare_drink', [
-        ('coffee', lambda coffee_machine: coffee_machine.prepare_coffee()),
-        ('tea', lambda coffee_machine: coffee_machine.prepare_tea()),
-        ('chocolate', lambda coffee_machine: coffee_machine.prepare_chocolate()),
+    def prepare_coffee(coffee_machine: CoffeeMachine):
+        return coffee_machine.prepare_coffee()
+
+    def prepare_tea(coffee_machine: CoffeeMachine):
+        return coffee_machine.prepare_tea()
+
+    def prepare_chocolate(coffee_machine: CoffeeMachine):
+        return coffee_machine.prepare_chocolate()
+
+    @pytest.mark.parametrize('prepare_drink', [
+        (prepare_coffee),
+        (prepare_tea),
+        (prepare_chocolate),
     ])
-    def test_drinks_are_not_served_if_no_money_is_added(self, product: str, prepare_drink: callable):
+    def test_drinks_are_not_served_if_no_money_is_added(self, prepare_drink: callable):
         prepare_drink(self.coffee_machine)
 
         expect(self.drink_maker.execute).not_to(have_been_called_with('C::'))
