@@ -1,4 +1,5 @@
 from coffee_machine.domain.drink import Drink
+from coffee_machine.domain.drink_type import DrinkType
 from coffee_machine.infrastructure.cheap_drink_maker import CheapDrinkMaker
 from coffee_machine.infrastructure.cheap_drink_maker_adapter import CheapDrinkMakerAdapter
 
@@ -10,6 +11,7 @@ class CoffeeMachine:
       self.current_drink = Drink()
 
    def prepare_coffee(self):
+      self.current_drink.drink = DrinkType.Coffee
       self.drink_maker_adapter.prepare(self.current_drink)
       self.current_drink.sugar = 0
 
