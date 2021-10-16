@@ -11,3 +11,6 @@ class CoffeeMachine:
 
    def prepare_tea(self):
       self.drink_maker.execute('T::')
+
+   def prepare_chocolate(self):
+      self.drink_maker.execute('H::')

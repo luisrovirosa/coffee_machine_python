@@ -23,3 +23,12 @@ class TestCoffeeMachine:
         coffee_machine.prepare_tea()
 
         expect(drink_maker.execute).to(have_been_called_with('T::'))
+
+
+    def test_prepare_a_chocolate_without_sugar_when_chocolate_is_pressed(self):
+        drink_maker = Spy(DrinkMaker)
+        coffee_machine = CoffeeMachine(drink_maker)
+
+        coffee_machine.prepare_chocolate()
+
+        expect(drink_maker.execute).to(have_been_called_with('H::'))
