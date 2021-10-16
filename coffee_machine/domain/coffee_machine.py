@@ -7,9 +7,11 @@ class CoffeeMachine:
     def __init__(self, drink_maker: DrinkMaker) -> None:
         self.drink_maker = drink_maker
         self.sugar_level = 0
+        self.money_in_cents = 0
 
     def prepare_coffee(self):
-        self._prepare_drink(DrinkType.Coffee)
+        if (self.money_in_cents != 0):
+            self._prepare_drink(DrinkType.Coffee)
 
     def prepare_tea(self):
         self._prepare_drink(DrinkType.Tea)
@@ -23,8 +25,8 @@ class CoffeeMachine:
     def add_two_sugar(self):
         self.sugar_level = 2
 
-    def add_money(self, cents: int):
-        pass
+    def add_money(self, money_in_cents: int):
+        self.money_in_cents = money_in_cents
 
     def _prepare_drink(self, drink: DrinkType):
         self.drink_maker.prepare(Drink(drink=drink, sugar=self.sugar_level))
