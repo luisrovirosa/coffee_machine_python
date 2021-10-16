@@ -37,5 +37,8 @@ class CheapDrinkMakerAdapter(DrinkMaker):
 
     @staticmethod
     def _drink(drink: Drink):
-        return 'C'
+        drink_codes = {
+            DrinkType.Coffee: 'C'
+        }
+        return drink_codes[drink.drink]
 
