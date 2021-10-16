@@ -6,6 +6,7 @@ from coffee_machine.domain.price_list import PriceList
 
 class CoffeeMachine:
     def __init__(self, drink_maker: DrinkMaker) -> None:
+        self.price_list = PriceList()
         self.drink_maker = drink_maker
         self.sugar_level = 0
         self.money_in_cents = 0
@@ -29,15 +30,11 @@ class CoffeeMachine:
         self.money_in_cents = money_in_cents
 
     def _prepare_drink(self, drink_type: DrinkType):
-        missing_money = self._drink_price(drink_type) - self.money_in_cents
+        missing_money = self.price_list.price_of(drink_type) - self.money_in_cents
         if missing_money <= 0:
             self.drink_maker.prepare(Drink(type=drink_type, sugar=self.sugar_level))
             self.sugar_level = 0
             self.money_in_cents = 0
         else:
             self.drink_maker.communicate(f'You need to add {missing_money} cents')
-
-    @staticmethod
-    def _drink_price(drink_type: DrinkType):
-        return PriceList().price_of(drink_type)
 
