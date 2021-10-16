@@ -39,5 +39,6 @@ class CoffeeMachine:
     def _drink_price(drink_type: DrinkType):
         prices = {
             DrinkType.Coffee: 60,
+            DrinkType.Tea: 40,
         }
         return prices.get(drink_type,100)

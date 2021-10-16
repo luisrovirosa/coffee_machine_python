@@ -103,7 +103,7 @@ class TestCoffeeMachineGoingIntoBusiness:
 
     @pytest.mark.parametrize('prepare_drink,money', [
         (prepare_coffee, 60),
-        # (prepare_tea, 40),
+        (prepare_tea, 40),
         # (prepare_chocolate, 50),
         (prepare_coffee, 100),
         (prepare_tea, 100),
