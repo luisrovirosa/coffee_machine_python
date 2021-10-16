@@ -3,7 +3,7 @@ from doublex_expects import have_been_called_with
 from expects import expect
 
 from coffee_machine import CoffeeMachine
-from coffee_machine.drink_maker import DrinkMaker
+from coffee_machine.infrastructure.drink_maker import DrinkMaker
 
 
 class TestCoffeeMachine:

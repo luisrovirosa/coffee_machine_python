@@ -1,5 +1,5 @@
-from coffee_machine.drink import Drink
-from coffee_machine.drink_maker import DrinkMaker
+from coffee_machine.domain.drink import Drink
+from coffee_machine.infrastructure.drink_maker import DrinkMaker
 
 
 class CoffeeMachine:

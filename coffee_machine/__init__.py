@@ -1,1 +1,1 @@
-from .coffee_machine import CoffeeMachine
+from .domain.coffee_machine import CoffeeMachine
