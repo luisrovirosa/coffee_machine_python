@@ -12,15 +12,12 @@ class CoffeeMachine:
         self.sugar_level = 0
 
     def prepare_coffee(self):
-        self.current_drink.drink = DrinkType.Coffee
         self._prepare_drink(DrinkType.Coffee)
 
     def prepare_tea(self):
-        self.current_drink.drink = DrinkType.Tea
         self._prepare_drink(DrinkType.Tea)
 
     def prepare_chocolate(self):
-        self.current_drink.drink = DrinkType.Chocolate
         self._prepare_drink(DrinkType.Chocolate)
 
     def add_one_sugar(self):
