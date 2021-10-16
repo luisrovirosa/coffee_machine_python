@@ -130,6 +130,8 @@ class TestCoffeeMachineGoingIntoBusiness:
         (prepare_coffee, 0, 60),
         (prepare_coffee, 10, 50),
         (prepare_coffee, 59, 1),
+        (prepare_chocolate, 0, 50),
+        (prepare_tea, 0, 40),
     ])
     def test_shows_the_missing_money_when_there_is_no_enough_money(self, prepare_drink: callable, money: int, missing_cents: int):
         self.coffee_machine.add_money(money)
