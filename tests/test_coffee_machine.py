@@ -107,6 +107,13 @@ class TestCoffeeMachine:
 
         expect(self.drink_maker.execute).not_to(have_been_called_with('T::'))
 
+    def test_chocolate_is_not_served_if_no_money_is_added(self):
+        coffee_machine = CoffeeMachine(self.adapter)
+
+        coffee_machine.prepare_chocolate()
+
+        expect(self.drink_maker.execute).not_to(have_been_called_with('H::'))
+
 
     def _coffee_machine_with_enough_money(self) -> CoffeeMachine:
         coffee_machine = CoffeeMachine(self.adapter)
