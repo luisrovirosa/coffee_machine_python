@@ -26,7 +26,7 @@ class CheapDrinkMakerAdapter(DrinkMaker):
             DrinkType.Tea: 'T',
             DrinkType.Chocolate: 'H',
         }
-        return drink_codes[drink.drink]
+        return drink_codes[drink.type]
 
     @staticmethod
     def _sugar(drink: Drink) -> str:
