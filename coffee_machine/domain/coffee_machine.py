@@ -10,10 +10,11 @@ class CoffeeMachine:
         self.money_in_cents = 0
 
     def prepare_coffee(self):
-        if (self.money_in_cents >= 40):
+        missing_money = 40 - self.money_in_cents
+        if (missing_money <= 0):
             self._prepare_drink(DrinkType.Coffee)
         else:
-            self.drink_maker.communicate(f'You need to add {40 - self.money_in_cents} cents')
+            self.drink_maker.communicate(f'You need to add {missing_money} cents')
 
     def prepare_tea(self):
         if (self.money_in_cents != 0):
