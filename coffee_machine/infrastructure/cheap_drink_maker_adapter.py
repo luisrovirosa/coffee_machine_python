@@ -12,25 +12,25 @@ class CheapDrinkMakerAdapter(DrinkMaker):
     def prepare(self, drink: Drink):
         if drink.drink == DrinkType.Coffee:
             if drink.sugar == 0:
-                self._prepare_drink('C::')
+                self._prepare_drink(f"C::")
             elif drink.sugar == 1:
-                self._prepare_drink('C:1:0')
+                self._prepare_drink(f"C:1:0")
             elif drink.sugar == 2:
-                self._prepare_drink('C:2:0')
+                self._prepare_drink(f"C:2:0")
         elif drink.drink == DrinkType.Tea:
             if drink.sugar == 0:
-                self._prepare_drink('T::')
+                self._prepare_drink(f"T::")
             elif drink.sugar == 1:
-                self._prepare_drink('T:1:0')
+                self._prepare_drink(f"T:1:0")
             elif drink.sugar == 2:
-                self._prepare_drink('T:2:0')
+                self._prepare_drink(f"T:2:0")
         else:
             if drink.sugar == 0:
-                self._prepare_drink('H::')
+                self._prepare_drink(f"H::")
             elif drink.sugar == 1:
-                self._prepare_drink('H:1:0')
+                self._prepare_drink(f"H:1:0")
             elif drink.sugar == 2:
-                self._prepare_drink('H:2:0')
+                self._prepare_drink(f"H:2:0")
 
     def _prepare_drink(self, command):
        self.cheap_drink_maker.execute(command)
