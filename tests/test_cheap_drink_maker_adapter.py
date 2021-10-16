@@ -14,6 +14,12 @@ class TestCheapDrinkMakerAdapter:
         (Drink(DrinkType.Coffee, 0), 'C::'),
         (Drink(DrinkType.Coffee, 1), 'C:1:0'),
         (Drink(DrinkType.Coffee, 2), 'C:2:0'),
+        (Drink(DrinkType.Tea, 0), 'T::'),
+        (Drink(DrinkType.Tea, 1), 'T:1:0'),
+        (Drink(DrinkType.Tea, 2), 'T:2:0'),
+        (Drink(DrinkType.Chocolate, 0), 'H::'),
+        (Drink(DrinkType.Chocolate, 1), 'H:1:0'),
+        (Drink(DrinkType.Chocolate, 2), 'H:2:0'),
     ])
     def test_adapt_different_types_of_drinks(self, drink: Drink, expected_command: str):
         cheap_drink_maker = Spy(CheapDrinkMaker)
