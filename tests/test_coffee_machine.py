@@ -4,13 +4,15 @@ from expects import expect
 
 from coffee_machine import CoffeeMachine
 from coffee_machine.infrastructure.cheap_drink_maker import CheapDrinkMaker
+from coffee_machine.infrastructure.cheap_drink_maker_adapter import CheapDrinkMakerAdapter
 
 
 class TestCoffeeMachine:
 
     def setup(self):
         self.drink_maker = Spy(CheapDrinkMaker)
-        self.coffee_machine = CoffeeMachine(self.drink_maker)
+        adapter = CheapDrinkMakerAdapter(self.drink_maker)
+        self.coffee_machine = CoffeeMachine(adapter)
 
     def test_prepare_a_coffee_without_sugar_when_coffee_is_pressed(self):
         self.coffee_machine.prepare_coffee()
