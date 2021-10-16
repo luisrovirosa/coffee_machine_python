@@ -126,13 +126,13 @@ class TestCoffeeMachineGoingIntoBusiness:
 
         expect(self.drink_maker.execute).to(have_been_called.once)
 
-    @pytest.mark.parametrize('money,missing_cents', [
-        (0, 40),
-        (10, 30),
-        (39, 1),
+    @pytest.mark.parametrize('prepare_drink,money,missing_cents', [
+        (prepare_coffee, 0, 40),
+        (prepare_coffee,10, 30),
+        (prepare_coffee, 39, 1),
     ])
-    def test_coffee_shows_the_missing_money_when_there_is_no_enough_money(self, money: int, missing_cents: int):
+    def test_shows_the_missing_money_when_there_is_no_enough_money(self, prepare_drink: callable, money: int, missing_cents: int):
         self.coffee_machine.add_money(money)
-        self.coffee_machine.prepare_coffee()
+        prepare_drink(self.coffee_machine)
 
         expect(self.drink_maker.execute).to(have_been_called_with(f'M:You need to add {missing_cents} cents'))
