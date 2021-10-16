@@ -10,7 +10,8 @@ class CheapDrinkMakerAdapter(DrinkMaker):
         self.cheap_drink_maker = cheap_drink_maker
 
     def prepare(self, drink: Drink) -> None:
-        self._prepare_drink(f"{self._drink(drink)}:{self._sugar(drink)}:{self._stick(drink)}")
+        command = f"{self._drink(drink)}:{self._sugar(drink)}:{self._stick(drink)}"
+        self.cheap_drink_maker.execute(command)
 
     def _prepare_drink(self, command) -> None:
        self.cheap_drink_maker.execute(command)
