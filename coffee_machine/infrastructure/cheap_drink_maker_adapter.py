@@ -10,12 +10,7 @@ class CheapDrinkMakerAdapter(DrinkMaker):
         self.cheap_drink_maker = cheap_drink_maker
 
     def prepare(self, drink: Drink):
-        if drink.sugar == 0:
-            self._prepare_drink(f"{self._drink(drink)}:{self._sugar(drink)}:{self._stick(drink)}")
-        elif drink.sugar == 1:
-            self._prepare_drink(f"{self._drink(drink)}:{self._sugar(drink)}:{self._stick(drink)}")
-        elif drink.sugar == 2:
-            self._prepare_drink(f"{self._drink(drink)}:{self._sugar(drink)}:{self._stick(drink)}")
+        self._prepare_drink(f"{self._drink(drink)}:{self._sugar(drink)}:{self._stick(drink)}")
 
     def _prepare_drink(self, command):
        self.cheap_drink_maker.execute(command)
