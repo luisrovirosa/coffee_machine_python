@@ -1,7 +1,7 @@
 import pytest
 from doublex import Spy
 from doublex_expects import have_been_called_with, have_been_called
-from expects import expect
+from expects import expect, start_with
 
 from coffee_machine import CoffeeMachine
 from coffee_machine.infrastructure.cheap_drink_maker import CheapDrinkMaker
@@ -111,9 +111,9 @@ class TestCoffeeMachineGoingIntoBusiness:
     ])
     def test_drinks_are_prepared_when_there_is_enough_money(self, prepare_drink: callable, money: int):
         self.coffee_machine.add_money(money)
-        self.coffee_machine.prepare_coffee()
+        prepare_drink(self.coffee_machine)
 
-        expect(self.drink_maker.execute).to(have_been_called_with(f'C::'))
+        expect(self.drink_maker.execute).not_to(have_been_called_with(start_with('M')))
 
     @pytest.mark.parametrize('prepare_drink', [
         (prepare_coffee),
