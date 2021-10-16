@@ -39,3 +39,9 @@ class TestCoffeeMachine:
         self.coffee_machine.prepare_coffee()
 
         expect(self.drink_maker.execute).to(have_been_called_with('C:2:0'))
+
+    def test_prepare_a_tea_with_one_sugar_and_stick_when_select_one_sugar_and_tea_is_pressed(self):
+        self.coffee_machine.add_one_sugar()
+        self.coffee_machine.prepare_tea()
+
+        expect(self.drink_maker.execute).to(have_been_called_with('T:1:0'))

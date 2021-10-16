@@ -15,7 +15,10 @@ class CoffeeMachine:
          self.drink_maker.execute('C:2:0')
 
    def prepare_tea(self):
-      self.drink_maker.execute('T::')
+      if self.sugar == 0:
+         self.drink_maker.execute('T::')
+      elif self.sugar == 1:
+         self.drink_maker.execute('T:1:0')
 
    def prepare_chocolate(self):
       self.drink_maker.execute('H::')
