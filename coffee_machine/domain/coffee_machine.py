@@ -16,12 +16,9 @@ class CoffeeMachine:
       self.current_drink.sugar = 0
 
    def prepare_tea(self):
-      if self.current_drink.sugar == 0:
-         self._prepare_drink('T::')
-      elif self.current_drink.sugar == 1:
-         self._prepare_drink('T:1:0')
-      elif self.current_drink.sugar == 2:
-         self._prepare_drink('T:2:0')
+      self.current_drink.drink = DrinkType.Tea
+      self.drink_maker_adapter.prepare(self.current_drink)
+      self.current_drink.sugar = 0
 
    def prepare_chocolate(self):
       if self.current_drink.sugar == 0:
