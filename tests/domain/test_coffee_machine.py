@@ -214,7 +214,7 @@ class TestCoffeeMachineMakingMoney:
     @pytest.mark.parametrize('prepare_drink, expected_report_line', [
         (prepare_coffee, 'Coffee: 1'),
         (prepare_tea, 'Tea: 1'),
-        # (prepare_chocolate),
+        (prepare_chocolate, 'Chocolate: 1'),
         # (prepare_orange),
     ])
     def test_calculate_the_amount_of_drinks_sold(self, prepare_drink: callable, expected_report_line: str):

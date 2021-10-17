@@ -52,6 +52,7 @@ class CoffeeMachine:
     def print_report(self):
         self.printer.print(f'Coffee: {self.sold_products[DrinkType.Coffee]}')
         self.printer.print(f'Tea: {self.sold_products[DrinkType.Tea]}')
+        self.printer.print(f'Chocolate: {self.sold_products[DrinkType.Chocolate]}')
 
     def _prepare_drink(self, drink_type: DrinkType):
         missing_money = self.price_list.price_of(drink_type) - self.money_in_cents
