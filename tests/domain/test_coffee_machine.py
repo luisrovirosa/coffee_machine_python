@@ -306,7 +306,6 @@ class TestCoffeeMachineRunningOut:
         (DrinkType.Chocolate, prepare_chocolate),
         (DrinkType.Orange, prepare_orange),
     ])
-    @pytest.mark.skip
     def test_sends_an_email_warning_the_shortage_of_a_product(self, drink_type: DrinkType, prepare_drink: callable):
         email_notifier = Spy(EmailNotifier)
         with Stub(BeverageQuantityChecker) as beverage_quantity_checker:
