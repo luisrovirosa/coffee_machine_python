@@ -39,10 +39,11 @@ You don't need to worry if there is too much money inserted. Just make sure, the
 The machine has been upgraded and the drink maker is now able to make orange juice and to deliver extra hot drinks. You have to update your code to send the correct messages to the drink maker so that users can have orange juices or extra hot drinks
 
 Let us see if your implementation is flexible enough to welcome those changes with not too much hassle.
-# Use cases
+## Use cases
 - I want to be able to buy a orange juice for 0,6 euro
 - I want to be able to have my coffee, chocolate or tea extra hot
-# Implementation details
+
+## Implementation details
 Here are the new protocol commands added to the new firmware of the drink maker:
 
     "O::" (Drink maker will make one orange juice)
@@ -57,7 +58,7 @@ The machine is becoming popular in the office. The management is eager to have d
 ## Use cases
 - I want to be able to print a report anytime that contains: how many of each drink was sold and the total amount of money earned so far.
 
-##Implementation details
+## Implementation details
 For the reporting, you can have a repository of data with a simple data structure in memory. A simple reporting can be done by printing to the console. Of course all of that should be tested before it is written, but you know that already, don't you ? ;)
 
 # Fifth iteration - Running out
