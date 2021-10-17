@@ -27,7 +27,8 @@ class CheapDrinkMakerAdapter(DrinkMaker):
             DrinkType.Chocolate: 'H',
             DrinkType.Orange: 'O',
         }
-        return drink_codes[drink.type]
+        extra_hot = 'h' if drink.extra_hot else ''
+        return drink_codes[drink.type] + extra_hot
 
     @staticmethod
     def _sugar(drink: Drink) -> str:
