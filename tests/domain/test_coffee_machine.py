@@ -86,6 +86,7 @@ class TestCoffeeMachineGoingIntoBusiness:
     CHOCOLATE_PRICE = 50
     TEA_PRICE = 40
     COFFEE_PRICE = 60
+    ORANGE_PRICE = 60
 
     def setup(self):
         self.adapter = Spy(DrinkMaker)
@@ -100,10 +101,14 @@ class TestCoffeeMachineGoingIntoBusiness:
     def prepare_chocolate(coffee_machine: CoffeeMachine):
         return coffee_machine.prepare_chocolate()
 
+    def prepare_orange(coffee_machine: CoffeeMachine):
+        return coffee_machine.prepare_orange()
+
     @pytest.mark.parametrize('prepare_drink', [
         (prepare_coffee),
         (prepare_tea),
         (prepare_chocolate),
+        (prepare_orange),
     ])
     def test_drinks_are_not_served_if_no_money_is_added(self, prepare_drink: callable):
         prepare_drink(self.coffee_machine)
@@ -114,9 +119,11 @@ class TestCoffeeMachineGoingIntoBusiness:
         (prepare_coffee, COFFEE_PRICE),
         (prepare_tea, TEA_PRICE),
         (prepare_chocolate, CHOCOLATE_PRICE),
+        (prepare_orange, ORANGE_PRICE),
         (prepare_coffee, 100),
         (prepare_tea, 100),
         (prepare_chocolate, 100),
+        (prepare_orange, 100),
     ])
     def test_drinks_are_prepared_when_there_is_enough_money(self, prepare_drink: callable, money: int):
         self.coffee_machine.add_money(money)
@@ -128,6 +135,7 @@ class TestCoffeeMachineGoingIntoBusiness:
         (prepare_coffee),
         (prepare_tea),
         (prepare_chocolate),
+        (prepare_orange),
     ])
     def test_no_message_is_displayed_when_there_is_enough_money(self, prepare_drink: callable):
         self.coffee_machine.add_money(100)
@@ -140,6 +148,7 @@ class TestCoffeeMachineGoingIntoBusiness:
         (prepare_coffee, 59, 1),
         (prepare_chocolate, 0, CHOCOLATE_PRICE),
         (prepare_tea, 0, TEA_PRICE),
+        (prepare_orange, 0, ORANGE_PRICE),
     ])
     def test_shows_the_missing_money_when_there_is_no_enough_money(self, prepare_drink: callable, money: int,
                                                                    missing_cents: int):
@@ -152,6 +161,7 @@ class TestCoffeeMachineGoingIntoBusiness:
         (prepare_coffee, COFFEE_PRICE),
         (prepare_tea, TEA_PRICE),
         (prepare_chocolate, CHOCOLATE_PRICE),
+        (prepare_orange, ORANGE_PRICE),
     ])
     def test_show_the_price_of_the_drink_when_no_money_is_added(self, prepare_drink: callable, missing_cents: int):
         prepare_drink(self.coffee_machine)
@@ -162,6 +172,7 @@ class TestCoffeeMachineGoingIntoBusiness:
         (prepare_coffee, COFFEE_PRICE),
         (prepare_tea, TEA_PRICE),
         (prepare_chocolate, CHOCOLATE_PRICE),
+        (prepare_orange, ORANGE_PRICE),
     ])
     def test_each_user_needs_to_add_money(self, prepare_drink: callable, missing_cents: int):
         self.coffee_machine.add_money(100)

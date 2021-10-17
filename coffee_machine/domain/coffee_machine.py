@@ -10,7 +10,7 @@ class CoffeeMachine:
             DrinkType.Coffee: 60,
             DrinkType.Tea: 40,
             DrinkType.Chocolate: 50,
-            DrinkType.Orange: 0,
+            DrinkType.Orange: 60,
         })
         self.drink_maker = drink_maker
         self.sugar_level = 0
