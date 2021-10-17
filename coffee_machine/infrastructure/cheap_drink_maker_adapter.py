@@ -25,6 +25,7 @@ class CheapDrinkMakerAdapter(DrinkMaker):
             DrinkType.Coffee: 'C',
             DrinkType.Tea: 'T',
             DrinkType.Chocolate: 'H',
+            DrinkType.Orange: 'O',
         }
         return drink_codes[drink.type]
 
