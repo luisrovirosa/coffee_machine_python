@@ -1,2 +1,3 @@
 class Printer:
-    pass
+    def print(self, line: str):
+        pass

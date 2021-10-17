@@ -211,12 +211,12 @@ class TestCoffeeMachineExtraHot:
 
 class TestCoffeeMachineMakingMoney:
 
-    @pytest.mark.skip
     def test_calculate_the_amount_of_drinks_sold(self):
         printer = Spy()
         coffee_machine = CoffeeMachine(Spy(), printer)
-
         coffee_machine.add_money(100)
         coffee_machine.prepare_coffee()
+
+        coffee_machine.print_report()
 
         expect(printer.print).to(have_been_called_with('Coffee: 1'))

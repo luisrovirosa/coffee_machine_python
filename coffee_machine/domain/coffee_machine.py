@@ -43,6 +43,9 @@ class CoffeeMachine:
     def extra_hot_drink(self) -> None:
         self.extra_hot = True
 
+    def print_report(self):
+        self.printer.print('Coffee: 1')
+
     def _prepare_drink(self, drink_type: DrinkType):
         missing_money = self.price_list.price_of(drink_type) - self.money_in_cents
         if missing_money <= 0:
