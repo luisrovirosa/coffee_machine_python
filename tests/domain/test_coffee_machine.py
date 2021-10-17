@@ -1,5 +1,5 @@
 import pytest
-from doublex import Spy, Stub
+from doublex import Spy, Stub, ANY_ARG
 from doublex_expects import have_been_called_with, have_been_called
 from expects import expect
 
@@ -282,16 +282,16 @@ class TestCoffeeMachineRunningOut:
         expect(drink_maker.prepare).not_to(have_been_called)
 
 
-    @pytest.mark.parametrize('drink_name,drink_type,prepare_drink', [
-        ('Coffee', DrinkType.Coffee, prepare_coffee),
-        ('Tea', DrinkType.Tea, prepare_tea),
-        ('Chocolate', DrinkType.Chocolate, prepare_chocolate),
-        ('Orange', DrinkType.Orange, prepare_orange),
+    @pytest.mark.parametrize('drink_name,prepare_drink', [
+        ('Coffee', prepare_coffee),
+        ('Tea', prepare_tea),
+        ('Chocolate', prepare_chocolate),
+        ('Orange', prepare_orange),
     ])
-    def test_shows_the_shortage_of_a_product(self, drink_name: str, drink_type: DrinkType, prepare_drink: callable):
+    def test_shows_the_shortage_of_a_product(self, drink_name: str, prepare_drink: callable):
         drink_maker = Spy(DrinkMaker)
         with Stub(BeverageQuantityChecker) as beverage_quantity_checker:
-            beverage_quantity_checker.is_empty(drink_type).returns(True)
+            beverage_quantity_checker.is_empty(ANY_ARG).returns(True)
         coffee_machine = CoffeeMachine(drink_maker, Spy(), beverage_quantity_checker)
         coffee_machine.add_money(ENOUGH_MONEY)
 
