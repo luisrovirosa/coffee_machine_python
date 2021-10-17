@@ -15,6 +15,7 @@ class CoffeeMachine:
         self.drink_maker = drink_maker
         self.sugar_level = 0
         self.money_in_cents = 0
+        self.extra_hot = False
 
     def prepare_coffee(self):
         self._prepare_drink(DrinkType.Coffee)
@@ -37,10 +38,13 @@ class CoffeeMachine:
     def add_money(self, money_in_cents: int):
         self.money_in_cents = money_in_cents
 
+    def extra_hot_drink(self) -> None:
+        self.extra_hot = True
+
     def _prepare_drink(self, drink_type: DrinkType):
         missing_money = self.price_list.price_of(drink_type) - self.money_in_cents
         if missing_money <= 0:
-            self.drink_maker.prepare(Drink(type=drink_type, sugar=self.sugar_level))
+            self.drink_maker.prepare(Drink(type=drink_type, sugar=self.sugar_level, extra_hot=self.extra_hot))
             self.sugar_level = 0
             self.money_in_cents = 0
         else:

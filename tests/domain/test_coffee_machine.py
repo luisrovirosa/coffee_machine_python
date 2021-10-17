@@ -81,6 +81,17 @@ class TestCoffeeMachinePreparesProducts:
 
         expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Coffee, 0)))
 
+def prepare_coffee(coffee_machine: CoffeeMachine):
+    return coffee_machine.prepare_coffee()
+
+def prepare_tea(coffee_machine: CoffeeMachine):
+    return coffee_machine.prepare_tea()
+
+def prepare_chocolate(coffee_machine: CoffeeMachine):
+    return coffee_machine.prepare_chocolate()
+
+def prepare_orange(coffee_machine: CoffeeMachine):
+    return coffee_machine.prepare_orange()
 
 class TestCoffeeMachineGoingIntoBusiness:
     CHOCOLATE_PRICE = 50
@@ -91,18 +102,6 @@ class TestCoffeeMachineGoingIntoBusiness:
     def setup(self):
         self.adapter = Spy(DrinkMaker)
         self.coffee_machine = CoffeeMachine(self.adapter)
-
-    def prepare_coffee(coffee_machine: CoffeeMachine):
-        return coffee_machine.prepare_coffee()
-
-    def prepare_tea(coffee_machine: CoffeeMachine):
-        return coffee_machine.prepare_tea()
-
-    def prepare_chocolate(coffee_machine: CoffeeMachine):
-        return coffee_machine.prepare_chocolate()
-
-    def prepare_orange(coffee_machine: CoffeeMachine):
-        return coffee_machine.prepare_orange()
 
     @pytest.mark.parametrize('prepare_drink', [
         (prepare_coffee),
@@ -182,3 +181,20 @@ class TestCoffeeMachineGoingIntoBusiness:
 
         expect(self.adapter.prepare).to(have_been_called.once)
         expect(self.adapter.communicate).to(have_been_called_with(f'You need to add {missing_cents} cents'))
+
+
+class TestCoffeeMachineExtraHot:
+    @pytest.mark.parametrize('drink_type,prepare_drink', [
+        (DrinkType.Coffee, prepare_coffee),
+        (DrinkType.Tea, prepare_tea),
+        (DrinkType.Chocolate, prepare_chocolate),
+    ])
+    def test_drinks_can_be_extra_hot(self, drink_type: DrinkType, prepare_drink: callable):
+        drink_maker = Spy(DrinkMaker)
+        coffee_machine = CoffeeMachine(drink_maker)
+
+        coffee_machine.add_money(100)
+        coffee_machine.extra_hot_drink()
+        prepare_drink(coffee_machine)
+
+        expect(drink_maker.prepare).to(have_been_called_with(Drink(drink_type, 0, True)))
