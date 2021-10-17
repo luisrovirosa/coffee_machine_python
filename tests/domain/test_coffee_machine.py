@@ -198,3 +198,13 @@ class TestCoffeeMachineExtraHot:
         prepare_drink(coffee_machine)
 
         expect(drink_maker.prepare).to(have_been_called_with(Drink(drink_type, 0, True)))
+
+    def test_orange_cannot_be_extra_hot(self):
+        drink_maker = Spy(DrinkMaker)
+        coffee_machine = CoffeeMachine(drink_maker)
+
+        coffee_machine.add_money(100)
+        coffee_machine.extra_hot_drink()
+        coffee_machine.prepare_orange()
+
+        expect(drink_maker.prepare).to(have_been_called_with(Drink(DrinkType.Orange, 0, False)))
