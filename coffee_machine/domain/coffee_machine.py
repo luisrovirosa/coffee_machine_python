@@ -54,7 +54,9 @@ class CoffeeMachine:
         self.printer.print(f'Tea: {self.sold_products[DrinkType.Tea]}')
         self.printer.print(f'Chocolate: {self.sold_products[DrinkType.Chocolate]}')
         self.printer.print(f'Orange: {self.sold_products[DrinkType.Orange]}')
-        self.printer.print(f'The amount of money made is: {self.price_list.price_of(DrinkType.Coffee)*self.sold_products[DrinkType.Coffee]}' )
+        amount_made = self.price_list.price_of(DrinkType.Coffee) * self.sold_products[DrinkType.Coffee]
+        amount_made += self.price_list.price_of(DrinkType.Tea) * self.sold_products[DrinkType.Tea]
+        self.printer.print(f'The amount of money made is: {amount_made}')
 
     def _prepare_drink(self, drink_type: DrinkType):
         missing_money = self.price_list.price_of(drink_type) - self.money_in_cents

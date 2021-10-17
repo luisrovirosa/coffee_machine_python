@@ -245,6 +245,7 @@ class TestCoffeeMachineMakingMoney:
     @pytest.mark.parametrize('prepare_drinks, expected_money', [
         ([prepare_coffee], COFFEE_PRICE),
         ([prepare_coffee, prepare_coffee], 2 * COFFEE_PRICE),
+        ([prepare_tea], TEA_PRICE),
     ])
     def test_calculate_the_amount_of_money_made(self, prepare_drinks: list, expected_money: int):
         printer = Spy()
