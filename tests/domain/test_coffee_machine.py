@@ -19,58 +19,58 @@ class TestCoffeeMachinePreparesProducts:
     def test_prepare_a_coffee_without_sugar_when_coffee_is_pressed(self):
         self.coffee_machine.prepare_coffee()
 
-        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Coffee, 0)))
+        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Coffee, 0, False)))
 
     def test_prepare_a_tea_without_sugar_when_tea_is_pressed(self):
         self.coffee_machine.prepare_tea()
 
-        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Tea, 0)))
+        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Tea, 0, False)))
 
     def test_prepare_a_chocolate_without_sugar_when_chocolate_is_pressed(self):
         self.coffee_machine.prepare_chocolate()
 
-        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Chocolate, 0)))
+        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Chocolate, 0, False)))
 
     def test_prepare_a_orange_without_sugar_when_orange_is_pressed(self):
         self.coffee_machine.prepare_orange()
 
-        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Orange, 0)))
+        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Orange, 0, False)))
 
     def test_prepare_a_coffee_with_one_sugar_and_stick_when_select_one_sugar_and_coffee_is_pressed(self):
         self.coffee_machine.add_one_sugar()
         self.coffee_machine.prepare_coffee()
 
-        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Coffee, 1)))
+        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Coffee, 1, False)))
 
     def test_prepare_a_coffee_with_two_sugar_and_stick_when_select_two_sugar_and_coffee_is_pressed(self):
         self.coffee_machine.add_two_sugar()
         self.coffee_machine.prepare_coffee()
 
-        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Coffee, 2)))
+        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Coffee, 2, False)))
 
     def test_prepare_a_tea_with_one_sugar_and_stick_when_select_one_sugar_and_tea_is_pressed(self):
         self.coffee_machine.add_one_sugar()
         self.coffee_machine.prepare_tea()
 
-        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Tea, 1)))
+        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Tea, 1, False)))
 
     def test_prepare_a_tea_with_two_sugar_and_stick_when_select_one_sugar_and_tea_is_pressed(self):
         self.coffee_machine.add_two_sugar()
         self.coffee_machine.prepare_tea()
 
-        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Tea, 2)))
+        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Tea, 2, False)))
 
     def test_prepare_a_chocolate_with_one_sugar_and_stick_when_select_one_sugar_and_chocolate_is_pressed(self):
         self.coffee_machine.add_one_sugar()
         self.coffee_machine.prepare_chocolate()
 
-        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Chocolate, 1)))
+        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Chocolate, 1, False)))
 
     def test_prepare_a_chocolate_with_two_sugar_and_stick_when_select_one_sugar_and_chocolate_is_pressed(self):
         self.coffee_machine.add_two_sugar()
         self.coffee_machine.prepare_chocolate()
 
-        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Chocolate, 2)))
+        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Chocolate, 2, False)))
 
     def test_sugar_level_is_not_related_to_previous_drinks(self):
         self.coffee_machine.add_two_sugar()
@@ -79,7 +79,7 @@ class TestCoffeeMachinePreparesProducts:
         self.coffee_machine.add_money(100)
         self.coffee_machine.prepare_coffee()
 
-        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Coffee, 0)))
+        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Coffee, 0, False)))
 
 def prepare_coffee(coffee_machine: CoffeeMachine):
     return coffee_machine.prepare_coffee()

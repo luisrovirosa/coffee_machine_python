@@ -11,15 +11,15 @@ from coffee_machine.infrastructure.cheap_drink_maker_adapter import CheapDrinkMa
 
 class TestCheapDrinkMakerAdapter:
     @pytest.mark.parametrize('drink,expected_command',[
-        (Drink(DrinkType.Coffee, 0), 'C::'),
-        (Drink(DrinkType.Coffee, 1), 'C:1:0'),
-        (Drink(DrinkType.Coffee, 2), 'C:2:0'),
-        (Drink(DrinkType.Tea, 0), 'T::'),
-        (Drink(DrinkType.Tea, 1), 'T:1:0'),
-        (Drink(DrinkType.Tea, 2), 'T:2:0'),
-        (Drink(DrinkType.Chocolate, 0), 'H::'),
-        (Drink(DrinkType.Chocolate, 1), 'H:1:0'),
-        (Drink(DrinkType.Chocolate, 2), 'H:2:0'),
+        (Drink(DrinkType.Coffee, 0, False), 'C::'),
+        (Drink(DrinkType.Coffee, 1, False), 'C:1:0'),
+        (Drink(DrinkType.Coffee, 2, False), 'C:2:0'),
+        (Drink(DrinkType.Tea, 0, False), 'T::'),
+        (Drink(DrinkType.Tea, 1, False), 'T:1:0'),
+        (Drink(DrinkType.Tea, 2, False), 'T:2:0'),
+        (Drink(DrinkType.Chocolate, 0, False), 'H::'),
+        (Drink(DrinkType.Chocolate, 1, False), 'H:1:0'),
+        (Drink(DrinkType.Chocolate, 2, False), 'H:2:0'),
     ])
     def test_adapt_different_types_of_drinks(self, drink: Drink, expected_command: str):
         cheap_drink_maker = Spy(CheapDrinkMaker)

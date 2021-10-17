@@ -6,4 +6,4 @@ from coffee_machine.domain.drink_type import DrinkType
 class Drink:
    type: DrinkType
    sugar: int
-   extra_hot: bool = False
+   extra_hot: bool
