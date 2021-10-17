@@ -208,3 +208,15 @@ class TestCoffeeMachineExtraHot:
         coffee_machine.prepare_orange()
 
         expect(drink_maker.prepare).to(have_been_called_with(Drink(DrinkType.Orange, 0, False)))
+
+class TestCoffeeMachineMakingMoney:
+
+    @pytest.mark.skip
+    def test_calculate_the_amount_of_drinks_sold(self):
+        printer = Spy()
+        coffee_machine = CoffeeMachine(Spy(), printer)
+
+        coffee_machine.add_money(100)
+        coffee_machine.prepare_coffee()
+
+        expect(printer.print).to(have_been_called_with('Coffee: 1'))
