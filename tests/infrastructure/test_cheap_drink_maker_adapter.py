@@ -10,6 +10,10 @@ from coffee_machine.infrastructure.cheap_drink_maker_adapter import CheapDrinkMa
 
 
 class TestCheapDrinkMakerAdapter:
+    def setup(self):
+        self.cheap_drink_maker = Spy(CheapDrinkMaker)
+        self.adapter = CheapDrinkMakerAdapter(self.cheap_drink_maker)
+
     @pytest.mark.parametrize('drink,expected_command',[
         (Drink(DrinkType.Coffee, 0, False), 'C::'),
         (Drink(DrinkType.Coffee, 1, False), 'C:1:0'),
@@ -25,12 +29,9 @@ class TestCheapDrinkMakerAdapter:
         (Drink(DrinkType.Orange, 2, False), 'O:2:0'),
     ])
     def test_adapt_different_types_of_drinks(self, drink: Drink, expected_command: str):
-        cheap_drink_maker = Spy(CheapDrinkMaker)
-        adapter = CheapDrinkMakerAdapter(cheap_drink_maker)
+        self.adapter.prepare(drink)
 
-        adapter.prepare(drink)
-
-        expect(cheap_drink_maker.execute).to(have_been_called_with(expected_command))
+        expect(self.cheap_drink_maker.execute).to(have_been_called_with(expected_command))
 
     @pytest.mark.parametrize('drink_type,expected_product',[
         (DrinkType.Coffee, 'Ch'),
@@ -38,19 +39,14 @@ class TestCheapDrinkMakerAdapter:
         (DrinkType.Chocolate, 'Hh'),
     ])
     def test_can_prepare_extra_hot_drinks(self, drink_type: DrinkType, expected_product: str):
-        cheap_drink_maker = Spy(CheapDrinkMaker)
-        adapter = CheapDrinkMakerAdapter(cheap_drink_maker)
         drink = Drink(drink_type, 0, True)
 
-        adapter.prepare(drink)
+        self.adapter.prepare(drink)
 
-        expect(cheap_drink_maker.execute).to(have_been_called_with(f'{expected_product}::'))
+        expect(self.cheap_drink_maker.execute).to(have_been_called_with(f'{expected_product}::'))
 
 
     def test_message_sends_the_command(self):
-        cheap_drink_maker = Spy(CheapDrinkMaker)
-        adapter = CheapDrinkMakerAdapter(cheap_drink_maker)
+        self.adapter.communicate('hello')
 
-        adapter.communicate('hello')
-
-        expect(cheap_drink_maker.execute).to(have_been_called_with('M:hello'))
+        expect(self.cheap_drink_maker.execute).to(have_been_called_with('M:hello'))
