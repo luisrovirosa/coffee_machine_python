@@ -1,3 +1,4 @@
+from coffee_machine.domain.beverage_quantity_checker import BeverageQuantityChecker
 from coffee_machine.domain.drink import Drink
 from coffee_machine.domain.drink_maker import DrinkMaker
 from coffee_machine.domain.drink_type import DrinkType
@@ -6,7 +7,7 @@ from coffee_machine.domain.printer import Printer
 
 
 class CoffeeMachine:
-    def __init__(self, drink_maker: DrinkMaker, printer: Printer, beverage_quantity_checker) -> None:
+    def __init__(self, drink_maker: DrinkMaker, printer: Printer, beverage_quantity_checker: BeverageQuantityChecker) -> None:
         self.price_list = PriceList({
             DrinkType.Coffee: 60,
             DrinkType.Tea: 40,
@@ -58,6 +59,8 @@ class CoffeeMachine:
         self.printer.print(f'The amount of money made is: {amount_made}')
 
     def _prepare_drink(self, drink_type: DrinkType):
+        if self.beverage_quantity_checker.is_empty(drink_type):
+            return
         missing_money = self.price_list.price_of(drink_type) - self.money_in_cents
         if missing_money <= 0:
             self.drink_maker.prepare(Drink(type=drink_type, sugar=self.sugar_level, extra_hot=self.extra_hot))

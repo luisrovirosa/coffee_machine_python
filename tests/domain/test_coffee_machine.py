@@ -264,12 +264,12 @@ class TestCoffeeMachineMakingMoney:
 
 
 class TestCoffeeMachineRunningOut:
-    @pytest.mark.skip
     def test_does_not_prepare_the_drink_when_there_are_no_milk(self):
         drink_maker = Spy(DrinkMaker)
-        beverage_quantity_checker = Stub(BeverageQuantityChecker)
-        beverage_quantity_checker.is_empty(DrinkType.Coffee).returns(True)
+        with Stub(BeverageQuantityChecker) as beverage_quantity_checker:
+            beverage_quantity_checker.is_empty(DrinkType.Coffee).returns(True)
         coffee_machine = CoffeeMachine(drink_maker, Spy(), beverage_quantity_checker)
+        coffee_machine.add_money(ENOUGH_MONEY)
 
         coffee_machine.prepare_coffee()
 
