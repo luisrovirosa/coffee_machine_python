@@ -52,10 +52,8 @@ class CoffeeMachine:
         self.extra_hot = True
 
     def print_report(self):
-        self.printer.print(f'{DrinkType.Coffee.name}: {self.sold_products[DrinkType.Coffee]}')
-        self.printer.print(f'Tea: {self.sold_products[DrinkType.Tea]}')
-        self.printer.print(f'Chocolate: {self.sold_products[DrinkType.Chocolate]}')
-        self.printer.print(f'Orange: {self.sold_products[DrinkType.Orange]}')
+        for drink_type in DrinkType:
+            self.printer.print(f'{drink_type.name}: {self.sold_products[drink_type]}')
         price_per_products = map(lambda drink_type: self.price_list.price_of(drink_type) * self.sold_products[drink_type], DrinkType)
         amount_made =  sum(price_per_products)
         self.printer.print(f'The amount of money made is: {amount_made}')
