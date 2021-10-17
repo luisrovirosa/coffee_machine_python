@@ -32,18 +32,19 @@ class TestCheapDrinkMakerAdapter:
 
         expect(cheap_drink_maker.execute).to(have_been_called_with(expected_command))
 
-    @pytest.mark.parametrize('drink,expected_command',[
-        (Drink(DrinkType.Coffee, 0, True), 'Ch::'),
-        (Drink(DrinkType.Tea, 0, True), 'Th::'),
-        (Drink(DrinkType.Chocolate, 0, True), 'Hh::'),
+    @pytest.mark.parametrize('drink_type,expected_product',[
+        (DrinkType.Coffee, 'Ch'),
+        (DrinkType.Tea, 'Th'),
+        (DrinkType.Chocolate, 'Hh'),
     ])
-    def test_can_prepare_extra_hot_drinks(self, drink: Drink, expected_command: str):
+    def test_can_prepare_extra_hot_drinks(self, drink_type: DrinkType, expected_product: str):
         cheap_drink_maker = Spy(CheapDrinkMaker)
         adapter = CheapDrinkMakerAdapter(cheap_drink_maker)
+        drink = Drink(drink_type, 0, True)
 
         adapter.prepare(drink)
 
-        expect(cheap_drink_maker.execute).to(have_been_called_with(expected_command))
+        expect(cheap_drink_maker.execute).to(have_been_called_with(f'{expected_product}::'))
 
 
     def test_message_sends_the_command(self):
