@@ -1,3 +1,5 @@
+from functools import reduce
+
 from coffee_machine.domain.drink import Drink
 from coffee_machine.domain.drink_maker import DrinkMaker
 from coffee_machine.domain.drink_type import DrinkType
@@ -54,10 +56,8 @@ class CoffeeMachine:
         self.printer.print(f'Tea: {self.sold_products[DrinkType.Tea]}')
         self.printer.print(f'Chocolate: {self.sold_products[DrinkType.Chocolate]}')
         self.printer.print(f'Orange: {self.sold_products[DrinkType.Orange]}')
-        amount_made = self.price_list.price_of(DrinkType.Coffee) * self.sold_products[DrinkType.Coffee]
-        amount_made += self.price_list.price_of(DrinkType.Tea) * self.sold_products[DrinkType.Tea]
-        amount_made += self.price_list.price_of(DrinkType.Chocolate) * self.sold_products[DrinkType.Chocolate]
-        amount_made += self.price_list.price_of(DrinkType.Orange) * self.sold_products[DrinkType.Orange]
+        price_per_products = map(lambda drink_type: self.price_list.price_of(drink_type) * self.sold_products[drink_type], DrinkType)
+        amount_made =  sum(price_per_products)
         self.printer.print(f'The amount of money made is: {amount_made}')
 
     def _prepare_drink(self, drink_type: DrinkType):
