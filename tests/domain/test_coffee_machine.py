@@ -264,14 +264,20 @@ class TestCoffeeMachineMakingMoney:
 
 
 class TestCoffeeMachineRunningOut:
-    def test_does_not_prepare_the_drink_when_there_are_no_milk(self):
+    @pytest.mark.parametrize('drink_type,prepare_drink', [
+        (DrinkType.Coffee, prepare_coffee),
+        (DrinkType.Tea, prepare_tea),
+        (DrinkType.Chocolate, prepare_chocolate),
+        (DrinkType.Orange, prepare_orange),
+    ])
+    def test_does_not_prepare_the_drink_when_there_are_no_milk(self, drink_type: DrinkType, prepare_drink: callable):
         drink_maker = Spy(DrinkMaker)
         with Stub(BeverageQuantityChecker) as beverage_quantity_checker:
-            beverage_quantity_checker.is_empty(DrinkType.Coffee).returns(True)
+            beverage_quantity_checker.is_empty(drink_type).returns(True)
         coffee_machine = CoffeeMachine(drink_maker, Spy(), beverage_quantity_checker)
         coffee_machine.add_money(ENOUGH_MONEY)
 
-        coffee_machine.prepare_coffee()
+        prepare_drink(coffee_machine)
 
         expect(drink_maker.prepare).not_to(have_been_called)
 
