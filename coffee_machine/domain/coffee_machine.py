@@ -54,8 +54,8 @@ class CoffeeMachine:
     def print_report(self):
         for drink_type in DrinkType:
             self.printer.print(f'{drink_type.name}: {self.sold_products[drink_type]}')
-        price_per_products = map(lambda drink_type: self.price_list.price_of(drink_type) * self.sold_products[drink_type], DrinkType)
-        amount_made =  sum(price_per_products)
+        earnings_per_products = [self.price_list.price_of(drink_type) * self.sold_products[drink_type] for drink_type in DrinkType]
+        amount_made =  sum(earnings_per_products)
         self.printer.print(f'The amount of money made is: {amount_made}')
 
     def _prepare_drink(self, drink_type: DrinkType):
