@@ -14,7 +14,7 @@ class TestCoffeeMachinePreparesProducts:
     def setup(self):
         self.adapter = Spy(DrinkMaker)
         self.coffee_machine = CoffeeMachine(self.adapter, Spy())
-        self.coffee_machine.add_money(100)
+        self.coffee_machine.add_money(ENOUGH_MONEY)
 
     def test_prepare_a_coffee_without_sugar_when_coffee_is_pressed(self):
         self.coffee_machine.prepare_coffee()
@@ -76,7 +76,7 @@ class TestCoffeeMachinePreparesProducts:
         self.coffee_machine.add_two_sugar()
         self.coffee_machine.prepare_coffee()
 
-        self.coffee_machine.add_money(100)
+        self.coffee_machine.add_money(ENOUGH_MONEY)
         self.coffee_machine.prepare_coffee()
 
         expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Coffee, 0, False)))
@@ -102,7 +102,7 @@ CHOCOLATE_PRICE = 50
 TEA_PRICE = 40
 COFFEE_PRICE = 60
 ORANGE_PRICE = 60
-
+ENOUGH_MONEY = 100
 
 class TestCoffeeMachineGoingIntoBusiness:
 
@@ -126,10 +126,10 @@ class TestCoffeeMachineGoingIntoBusiness:
         (prepare_tea, TEA_PRICE),
         (prepare_chocolate, CHOCOLATE_PRICE),
         (prepare_orange, ORANGE_PRICE),
-        (prepare_coffee, 100),
-        (prepare_tea, 100),
-        (prepare_chocolate, 100),
-        (prepare_orange, 100),
+        (prepare_coffee, ENOUGH_MONEY),
+        (prepare_tea, ENOUGH_MONEY),
+        (prepare_chocolate, ENOUGH_MONEY),
+        (prepare_orange, ENOUGH_MONEY),
     ])
     def test_drinks_are_prepared_when_there_is_enough_money(self, prepare_drink: callable, money: int):
         self.coffee_machine.add_money(money)
@@ -144,7 +144,7 @@ class TestCoffeeMachineGoingIntoBusiness:
         (prepare_orange),
     ])
     def test_no_message_is_displayed_when_there_is_enough_money(self, prepare_drink: callable):
-        self.coffee_machine.add_money(100)
+        self.coffee_machine.add_money(ENOUGH_MONEY)
         prepare_drink(self.coffee_machine)
 
         expect(self.adapter.communicate).not_to(have_been_called)
@@ -181,7 +181,7 @@ class TestCoffeeMachineGoingIntoBusiness:
         (prepare_orange, ORANGE_PRICE),
     ])
     def test_each_user_needs_to_add_money(self, prepare_drink: callable, missing_cents: int):
-        self.coffee_machine.add_money(100)
+        self.coffee_machine.add_money(ENOUGH_MONEY)
         prepare_drink(self.coffee_machine)
 
         prepare_drink(self.coffee_machine)
@@ -200,7 +200,7 @@ class TestCoffeeMachineExtraHot:
         drink_maker = Spy(DrinkMaker)
         coffee_machine = CoffeeMachine(drink_maker, Spy())
 
-        coffee_machine.add_money(100)
+        coffee_machine.add_money(ENOUGH_MONEY)
         coffee_machine.extra_hot_drink()
         prepare_drink(coffee_machine)
 
@@ -210,7 +210,7 @@ class TestCoffeeMachineExtraHot:
         drink_maker = Spy(DrinkMaker)
         coffee_machine = CoffeeMachine(drink_maker, Spy())
 
-        coffee_machine.add_money(100)
+        coffee_machine.add_money(ENOUGH_MONEY)
         coffee_machine.extra_hot_drink()
         coffee_machine.prepare_orange()
 
@@ -235,7 +235,7 @@ class TestCoffeeMachineMakingMoney:
         printer = Spy()
         coffee_machine = CoffeeMachine(Spy(), printer)
         for prepare_drink in prepare_drinks:
-            coffee_machine.add_money(100)
+            coffee_machine.add_money(ENOUGH_MONEY)
             prepare_drink(coffee_machine)
 
         coffee_machine.print_report()
@@ -254,7 +254,7 @@ class TestCoffeeMachineMakingMoney:
         printer = Spy()
         coffee_machine = CoffeeMachine(Spy(), printer)
         for prepare_drink in prepare_drinks:
-            coffee_machine.add_money(100)
+            coffee_machine.add_money(ENOUGH_MONEY)
             prepare_drink(coffee_machine)
 
         coffee_machine.print_report()
