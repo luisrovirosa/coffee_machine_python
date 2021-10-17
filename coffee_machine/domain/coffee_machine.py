@@ -1,5 +1,3 @@
-from functools import reduce
-
 from coffee_machine.domain.drink import Drink
 from coffee_machine.domain.drink_maker import DrinkMaker
 from coffee_machine.domain.drink_type import DrinkType
@@ -8,7 +6,7 @@ from coffee_machine.domain.printer import Printer
 
 
 class CoffeeMachine:
-    def __init__(self, drink_maker: DrinkMaker, printer: Printer) -> None:
+    def __init__(self, drink_maker: DrinkMaker, printer: Printer, beverage_quantity_checker) -> None:
         self.price_list = PriceList({
             DrinkType.Coffee: 60,
             DrinkType.Tea: 40,
@@ -17,6 +15,7 @@ class CoffeeMachine:
         })
         self.drink_maker = drink_maker
         self.printer = printer
+        self.beverage_quantity_checker = beverage_quantity_checker
         self.sugar_level = 0
         self.money_in_cents = 0
         self.extra_hot = False

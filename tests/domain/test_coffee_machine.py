@@ -14,7 +14,7 @@ class TestCoffeeMachinePreparesProducts:
 
     def setup(self):
         self.adapter = Spy(DrinkMaker)
-        self.coffee_machine = CoffeeMachine(self.adapter, Spy())
+        self.coffee_machine = CoffeeMachine(self.adapter, Spy(), Spy())
         self.coffee_machine.add_money(ENOUGH_MONEY)
 
     def test_prepare_a_coffee_without_sugar_when_coffee_is_pressed(self):
@@ -109,7 +109,7 @@ class TestCoffeeMachineGoingIntoBusiness:
 
     def setup(self):
         self.adapter = Spy(DrinkMaker)
-        self.coffee_machine = CoffeeMachine(self.adapter, Spy())
+        self.coffee_machine = CoffeeMachine(self.adapter, Spy(), Spy())
 
     @pytest.mark.parametrize('prepare_drink', [
         (prepare_coffee),
@@ -199,7 +199,7 @@ class TestCoffeeMachineExtraHot:
     ])
     def test_drinks_can_be_extra_hot(self, drink_type: DrinkType, prepare_drink: callable):
         drink_maker = Spy(DrinkMaker)
-        coffee_machine = CoffeeMachine(drink_maker, Spy())
+        coffee_machine = CoffeeMachine(drink_maker, Spy(), Spy())
 
         coffee_machine.add_money(ENOUGH_MONEY)
         coffee_machine.extra_hot_drink()
@@ -209,7 +209,7 @@ class TestCoffeeMachineExtraHot:
 
     def test_orange_cannot_be_extra_hot(self):
         drink_maker = Spy(DrinkMaker)
-        coffee_machine = CoffeeMachine(drink_maker, Spy())
+        coffee_machine = CoffeeMachine(drink_maker, Spy(), Spy())
 
         coffee_machine.add_money(ENOUGH_MONEY)
         coffee_machine.extra_hot_drink()
@@ -234,7 +234,7 @@ class TestCoffeeMachineMakingMoney:
     ])
     def test_calculate_the_amount_of_drinks_sold(self, prepare_drinks: list, expected_report_line: str):
         printer = Spy()
-        coffee_machine = CoffeeMachine(Spy(), printer)
+        coffee_machine = CoffeeMachine(Spy(), printer, Spy())
         for prepare_drink in prepare_drinks:
             coffee_machine.add_money(ENOUGH_MONEY)
             prepare_drink(coffee_machine)
@@ -253,7 +253,7 @@ class TestCoffeeMachineMakingMoney:
     ])
     def test_calculate_the_amount_of_money_made(self, prepare_drinks: list, expected_money: int):
         printer = Spy()
-        coffee_machine = CoffeeMachine(Spy(), printer)
+        coffee_machine = CoffeeMachine(Spy(), printer, Spy())
         for prepare_drink in prepare_drinks:
             coffee_machine.add_money(ENOUGH_MONEY)
             prepare_drink(coffee_machine)
