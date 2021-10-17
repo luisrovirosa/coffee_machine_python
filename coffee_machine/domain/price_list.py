@@ -3,8 +3,9 @@ from coffee_machine.domain.drink_type import DrinkType
 
 class PriceList:
     def __init__(self, prices: dict):
-        if not all(drink_type in prices for drink_type in DrinkType):
-            raise Exception(f'Missing price for {type}')
+        for drink_type in DrinkType:
+            if drink_type not in prices:
+                raise Exception(f'Missing price for {drink_type}')
         self.prices = prices
 
     def price_of(self, drink_type: DrinkType) -> int:
