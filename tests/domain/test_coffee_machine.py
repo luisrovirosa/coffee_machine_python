@@ -211,17 +211,18 @@ class TestCoffeeMachineExtraHot:
 
 class TestCoffeeMachineMakingMoney:
 
-    @pytest.mark.parametrize('prepare_drink, expected_report_line', [
-        (prepare_coffee, 'Coffee: 1'),
-        (prepare_tea, 'Tea: 1'),
-        (prepare_chocolate, 'Chocolate: 1'),
-        (prepare_orange, 'Orange: 1'),
+    @pytest.mark.parametrize('prepare_drinks, expected_report_line', [
+        ([prepare_coffee], 'Coffee: 1'),
+        ([prepare_tea], 'Tea: 1'),
+        ([prepare_chocolate], 'Chocolate: 1'),
+        ([prepare_orange], 'Orange: 1'),
     ])
-    def test_calculate_the_amount_of_drinks_sold(self, prepare_drink: callable, expected_report_line: str):
+    def test_calculate_the_amount_of_drinks_sold(self, prepare_drinks: list, expected_report_line: str):
         printer = Spy()
         coffee_machine = CoffeeMachine(Spy(), printer)
-        coffee_machine.add_money(100)
-        prepare_drink(coffee_machine)
+        for prepare_drink in prepare_drinks:
+            coffee_machine.add_money(100)
+            prepare_drink(coffee_machine)
 
         coffee_machine.print_report()
 
