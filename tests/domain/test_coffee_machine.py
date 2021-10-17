@@ -248,6 +248,7 @@ class TestCoffeeMachineMakingMoney:
         ([prepare_tea], TEA_PRICE),
         ([prepare_chocolate], CHOCOLATE_PRICE),
         ([prepare_orange], ORANGE_PRICE),
+        ([prepare_coffee, prepare_tea], COFFEE_PRICE + TEA_PRICE),
     ])
     def test_calculate_the_amount_of_money_made(self, prepare_drinks: list, expected_money: int):
         printer = Spy()
