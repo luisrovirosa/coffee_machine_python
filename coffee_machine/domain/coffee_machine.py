@@ -60,7 +60,7 @@ class CoffeeMachine:
 
     def _prepare_drink(self, drink_type: DrinkType):
         if self.beverage_quantity_checker.is_empty(drink_type):
-            self.drink_maker.communicate('There is a shortage of Coffee')
+            self.drink_maker.communicate(f'There is a shortage of {drink_type.name}')
             return
         missing_money = self.price_list.price_of(drink_type) - self.money_in_cents
         if missing_money <= 0:
