@@ -31,6 +31,11 @@ class TestCoffeeMachinePreparesProducts:
 
         expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Chocolate, 0)))
 
+    def test_prepare_a_orange_without_sugar_when_orange_is_pressed(self):
+        self.coffee_machine.prepare_orange()
+
+        expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Orange, 0)))
+
     def test_prepare_a_coffee_with_one_sugar_and_stick_when_select_one_sugar_and_coffee_is_pressed(self):
         self.coffee_machine.add_one_sugar()
         self.coffee_machine.prepare_coffee()

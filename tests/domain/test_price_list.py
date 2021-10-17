@@ -10,6 +10,7 @@ class TestPriceList:
             DrinkType.Coffee: 1,
             DrinkType.Tea: 1,
             DrinkType.Chocolate: 1,
+            DrinkType.Orange: 1,
         }
 
     def test_can_be_created_with_all_drink_type_prices(self):

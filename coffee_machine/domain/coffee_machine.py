@@ -10,6 +10,7 @@ class CoffeeMachine:
             DrinkType.Coffee: 60,
             DrinkType.Tea: 40,
             DrinkType.Chocolate: 50,
+            DrinkType.Orange: 0,
         })
         self.drink_maker = drink_maker
         self.sugar_level = 0
@@ -23,6 +24,9 @@ class CoffeeMachine:
 
     def prepare_chocolate(self):
         self._prepare_drink(DrinkType.Chocolate)
+
+    def prepare_orange(self):
+        self._prepare_drink(DrinkType.Orange)
 
     def add_one_sugar(self):
         self.sugar_level = 1
