@@ -215,7 +215,7 @@ class TestCoffeeMachineMakingMoney:
         (prepare_coffee, 'Coffee: 1'),
         (prepare_tea, 'Tea: 1'),
         (prepare_chocolate, 'Chocolate: 1'),
-        # (prepare_orange),
+        (prepare_orange, 'Orange: 1'),
     ])
     def test_calculate_the_amount_of_drinks_sold(self, prepare_drink: callable, expected_report_line: str):
         printer = Spy()
