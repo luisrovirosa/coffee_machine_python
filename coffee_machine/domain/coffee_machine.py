@@ -2,12 +2,13 @@ from coffee_machine.domain.beverage_quantity_checker import BeverageQuantityChec
 from coffee_machine.domain.drink import Drink
 from coffee_machine.domain.drink_maker import DrinkMaker
 from coffee_machine.domain.drink_type import DrinkType
+from coffee_machine.domain.email_notifier import EmailNotifier
 from coffee_machine.domain.price_list import PriceList
 from coffee_machine.domain.printer import Printer
 
 
 class CoffeeMachine:
-    def __init__(self, drink_maker: DrinkMaker, printer: Printer, beverage_quantity_checker: BeverageQuantityChecker) -> None:
+    def __init__(self, drink_maker: DrinkMaker, printer: Printer, beverage_quantity_checker: BeverageQuantityChecker, email_notifier: EmailNotifier) -> None:
         self.price_list = PriceList({
             DrinkType.Coffee: 60,
             DrinkType.Tea: 40,
@@ -17,6 +18,7 @@ class CoffeeMachine:
         self.drink_maker = drink_maker
         self.printer = printer
         self.beverage_quantity_checker = beverage_quantity_checker
+        self.email_notifier = email_notifier
         self.sugar_level = 0
         self.money_in_cents = 0
         self.extra_hot = False
