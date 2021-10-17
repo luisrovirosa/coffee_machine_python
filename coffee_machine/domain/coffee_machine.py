@@ -58,16 +58,18 @@ class CoffeeMachine:
         amount_made =  sum(earnings_per_products)
         self.printer.print(f'The amount of money made is: {amount_made}')
 
-    def _prepare_drink(self, drink_type: DrinkType):
+    def _prepare_drink(self, drink_type: DrinkType) -> None:
         if self.beverage_quantity_checker.is_empty(drink_type):
             self.drink_maker.communicate(f'There is a shortage of {drink_type.name}')
             return
+
         missing_money = self.price_list.price_of(drink_type) - self.money_in_cents
-        if missing_money <= 0:
-            self.drink_maker.prepare(Drink(type=drink_type, sugar=self.sugar_level, extra_hot=self.extra_hot))
-            self.sold_products[drink_type] += 1
-            self.sugar_level = 0
-            self.money_in_cents = 0
-        else:
+        if missing_money > 0:
             self.drink_maker.communicate(f'You need to add {missing_money} cents')
+            return
+
+        self.drink_maker.prepare(Drink(type=drink_type, sugar=self.sugar_level, extra_hot=self.extra_hot))
+        self.sold_products[drink_type] += 1
+        self.sugar_level = 0
+        self.money_in_cents = 0
 
