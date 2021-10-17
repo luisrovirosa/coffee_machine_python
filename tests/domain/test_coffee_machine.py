@@ -81,22 +81,29 @@ class TestCoffeeMachinePreparesProducts:
 
         expect(self.adapter.prepare).to(have_been_called_with(Drink(DrinkType.Coffee, 0, False)))
 
+
 def prepare_coffee(coffee_machine: CoffeeMachine):
     return coffee_machine.prepare_coffee()
+
 
 def prepare_tea(coffee_machine: CoffeeMachine):
     return coffee_machine.prepare_tea()
 
+
 def prepare_chocolate(coffee_machine: CoffeeMachine):
     return coffee_machine.prepare_chocolate()
 
+
 def prepare_orange(coffee_machine: CoffeeMachine):
     return coffee_machine.prepare_orange()
+
 
 CHOCOLATE_PRICE = 50
 TEA_PRICE = 40
 COFFEE_PRICE = 60
 ORANGE_PRICE = 60
+
+
 class TestCoffeeMachineGoingIntoBusiness:
 
     def setup(self):
@@ -209,6 +216,7 @@ class TestCoffeeMachineExtraHot:
 
         expect(drink_maker.prepare).to(have_been_called_with(Drink(DrinkType.Orange, 0, False)))
 
+
 class TestCoffeeMachineMakingMoney:
 
     @pytest.mark.parametrize('prepare_drinks, expected_report_line', [
@@ -216,12 +224,12 @@ class TestCoffeeMachineMakingMoney:
         ([prepare_tea], 'Tea: 1'),
         ([prepare_chocolate], 'Chocolate: 1'),
         ([prepare_orange], 'Orange: 1'),
-        ([prepare_coffee,prepare_coffee], 'Coffee: 2'),
-        ([prepare_tea,prepare_tea], 'Tea: 2'),
-        ([prepare_chocolate,prepare_chocolate], 'Chocolate: 2'),
-        ([prepare_orange,prepare_orange], 'Orange: 2'),
-        ([prepare_coffee,prepare_coffee,prepare_orange], 'Coffee: 2'),
-        ([prepare_coffee,prepare_coffee,prepare_orange], 'Orange: 1'),
+        ([prepare_coffee, prepare_coffee], 'Coffee: 2'),
+        ([prepare_tea, prepare_tea], 'Tea: 2'),
+        ([prepare_chocolate, prepare_chocolate], 'Chocolate: 2'),
+        ([prepare_orange, prepare_orange], 'Orange: 2'),
+        ([prepare_coffee, prepare_coffee, prepare_orange], 'Coffee: 2'),
+        ([prepare_coffee, prepare_coffee, prepare_orange], 'Orange: 1'),
     ])
     def test_calculate_the_amount_of_drinks_sold(self, prepare_drinks: list, expected_report_line: str):
         printer = Spy()
@@ -236,7 +244,7 @@ class TestCoffeeMachineMakingMoney:
 
     @pytest.mark.parametrize('prepare_drinks, expected_money', [
         ([prepare_coffee], COFFEE_PRICE),
-        ([prepare_coffee, prepare_coffee], 2*COFFEE_PRICE),
+        ([prepare_coffee, prepare_coffee], 2 * COFFEE_PRICE),
     ])
     def test_calculate_the_amount_of_money_made(self, prepare_drinks: list, expected_money: int):
         printer = Spy()
