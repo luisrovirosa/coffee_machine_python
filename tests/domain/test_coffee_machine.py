@@ -8,6 +8,7 @@ from coffee_machine.domain.beverage_quantity_checker import BeverageQuantityChec
 from coffee_machine.domain.drink import Drink
 from coffee_machine.domain.drink_maker import DrinkMaker
 from coffee_machine.domain.drink_type import DrinkType
+from coffee_machine.domain.email_notifier import EmailNotifier
 
 
 class TestCoffeeMachinePreparesProducts:
@@ -298,3 +299,21 @@ class TestCoffeeMachineRunningOut:
         prepare_drink(coffee_machine)
 
         expect(drink_maker.communicate).to(have_been_called_with(f'There is a shortage of {drink_name}'))
+
+    @pytest.mark.parametrize('drink_type,prepare_drink', [
+        (DrinkType.Coffee, prepare_coffee),
+        (DrinkType.Tea, prepare_tea),
+        (DrinkType.Chocolate, prepare_chocolate),
+        (DrinkType.Orange, prepare_orange),
+    ])
+    @pytest.mark.skip
+    def test_sends_an_email_warning_the_shortage_of_a_product(self, drink_type: DrinkType, prepare_drink: callable):
+        email_notifier = Spy(EmailNotifier)
+        with Stub(BeverageQuantityChecker) as beverage_quantity_checker:
+            beverage_quantity_checker.is_empty(ANY_ARG).returns(True)
+        coffee_machine = CoffeeMachine(Spy(DrinkMaker), Spy(), beverage_quantity_checker, email_notifier)
+        coffee_machine.add_money(ENOUGH_MONEY)
+
+        prepare_drink(coffee_machine)
+
+        expect(email_notifier.notify_missing_drink).to(have_been_called_with(drink_type))
