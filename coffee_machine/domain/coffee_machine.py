@@ -52,7 +52,7 @@ class CoffeeMachine:
         self.extra_hot = True
 
     def print_report(self):
-        self.printer.print(f'Coffee: {self.sold_products[DrinkType.Coffee]}')
+        self.printer.print(f'{DrinkType.Coffee.name}: {self.sold_products[DrinkType.Coffee]}')
         self.printer.print(f'Tea: {self.sold_products[DrinkType.Tea]}')
         self.printer.print(f'Chocolate: {self.sold_products[DrinkType.Chocolate]}')
         self.printer.print(f'Orange: {self.sold_products[DrinkType.Orange]}')
