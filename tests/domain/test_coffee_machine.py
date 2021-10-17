@@ -1,9 +1,10 @@
 import pytest
-from doublex import Spy
+from doublex import Spy, Stub
 from doublex_expects import have_been_called_with, have_been_called
 from expects import expect
 
 from coffee_machine import CoffeeMachine
+from coffee_machine.domain.beverage_quantity_checker import BeverageQuantityChecker
 from coffee_machine.domain.drink import Drink
 from coffee_machine.domain.drink_maker import DrinkMaker
 from coffee_machine.domain.drink_type import DrinkType
@@ -260,3 +261,16 @@ class TestCoffeeMachineMakingMoney:
         coffee_machine.print_report()
 
         expect(printer.print).to(have_been_called_with(f'The amount of money made is: {expected_money}'))
+
+
+class TestCoffeeMachineRunningOut:
+    @pytest.mark.skip
+    def test_does_not_prepare_the_drink_when_there_are_no_milk(self):
+        drink_maker = Spy(DrinkMaker)
+        beverage_quantity_checker = Stub(BeverageQuantityChecker)
+        beverage_quantity_checker.is_empty(DrinkType.Coffee).returns(True)
+        coffee_machine = CoffeeMachine(drink_maker, Spy(), beverage_quantity_checker)
+
+        coffee_machine.prepare_coffee()
+
+        expect(drink_maker.prepare).not_to(have_been_called)
