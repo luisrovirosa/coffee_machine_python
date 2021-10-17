@@ -13,7 +13,7 @@ class TestCoffeeMachinePreparesProducts:
 
     def setup(self):
         self.adapter = Spy(DrinkMaker)
-        self.coffee_machine = CoffeeMachine(self.adapter)
+        self.coffee_machine = CoffeeMachine(self.adapter, Spy())
         self.coffee_machine.add_money(100)
 
     def test_prepare_a_coffee_without_sugar_when_coffee_is_pressed(self):
@@ -101,7 +101,7 @@ class TestCoffeeMachineGoingIntoBusiness:
 
     def setup(self):
         self.adapter = Spy(DrinkMaker)
-        self.coffee_machine = CoffeeMachine(self.adapter)
+        self.coffee_machine = CoffeeMachine(self.adapter, Spy())
 
     @pytest.mark.parametrize('prepare_drink', [
         (prepare_coffee),
@@ -191,7 +191,7 @@ class TestCoffeeMachineExtraHot:
     ])
     def test_drinks_can_be_extra_hot(self, drink_type: DrinkType, prepare_drink: callable):
         drink_maker = Spy(DrinkMaker)
-        coffee_machine = CoffeeMachine(drink_maker)
+        coffee_machine = CoffeeMachine(drink_maker, Spy())
 
         coffee_machine.add_money(100)
         coffee_machine.extra_hot_drink()
@@ -201,7 +201,7 @@ class TestCoffeeMachineExtraHot:
 
     def test_orange_cannot_be_extra_hot(self):
         drink_maker = Spy(DrinkMaker)
-        coffee_machine = CoffeeMachine(drink_maker)
+        coffee_machine = CoffeeMachine(drink_maker, Spy())
 
         coffee_machine.add_money(100)
         coffee_machine.extra_hot_drink()

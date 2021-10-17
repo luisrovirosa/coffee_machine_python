@@ -2,10 +2,11 @@ from coffee_machine.domain.drink import Drink
 from coffee_machine.domain.drink_maker import DrinkMaker
 from coffee_machine.domain.drink_type import DrinkType
 from coffee_machine.domain.price_list import PriceList
+from coffee_machine.domain.printer import Printer
 
 
 class CoffeeMachine:
-    def __init__(self, drink_maker: DrinkMaker) -> None:
+    def __init__(self, drink_maker: DrinkMaker, printer: Printer) -> None:
         self.price_list = PriceList({
             DrinkType.Coffee: 60,
             DrinkType.Tea: 40,
@@ -13,6 +14,7 @@ class CoffeeMachine:
             DrinkType.Orange: 60,
         })
         self.drink_maker = drink_maker
+        self.printer = printer
         self.sugar_level = 0
         self.money_in_cents = 0
         self.extra_hot = False
