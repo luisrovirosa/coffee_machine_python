@@ -274,3 +274,14 @@ class TestCoffeeMachineRunningOut:
         coffee_machine.prepare_coffee()
 
         expect(drink_maker.prepare).not_to(have_been_called)
+
+    def test_shows_the_shortage_of_a_product(self):
+        drink_maker = Spy(DrinkMaker)
+        with Stub(BeverageQuantityChecker) as beverage_quantity_checker:
+            beverage_quantity_checker.is_empty(DrinkType.Coffee).returns(True)
+        coffee_machine = CoffeeMachine(drink_maker, Spy(), beverage_quantity_checker)
+        coffee_machine.add_money(ENOUGH_MONEY)
+
+        coffee_machine.prepare_coffee()
+
+        expect(drink_maker.communicate).to(have_been_called_with('There is a shortage of Coffee'))
