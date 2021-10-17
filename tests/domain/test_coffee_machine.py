@@ -213,7 +213,7 @@ class TestCoffeeMachineMakingMoney:
 
     @pytest.mark.parametrize('prepare_drink, expected_report_line', [
         (prepare_coffee, 'Coffee: 1'),
-        # (prepare_tea),
+        (prepare_tea, 'Tea: 1'),
         # (prepare_chocolate),
         # (prepare_orange),
     ])

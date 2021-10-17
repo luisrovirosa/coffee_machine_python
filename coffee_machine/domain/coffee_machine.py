@@ -18,6 +18,12 @@ class CoffeeMachine:
         self.sugar_level = 0
         self.money_in_cents = 0
         self.extra_hot = False
+        self.sold_products = {
+            DrinkType.Coffee: 0,
+            DrinkType.Tea: 0,
+            DrinkType.Chocolate: 0,
+            DrinkType.Orange: 0,
+        }
 
     def prepare_coffee(self):
         self._prepare_drink(DrinkType.Coffee)
@@ -44,12 +50,14 @@ class CoffeeMachine:
         self.extra_hot = True
 
     def print_report(self):
-        self.printer.print('Coffee: 1')
+        self.printer.print(f'Coffee: {self.sold_products[DrinkType.Coffee]}')
+        self.printer.print(f'Tea: {self.sold_products[DrinkType.Tea]}')
 
     def _prepare_drink(self, drink_type: DrinkType):
         missing_money = self.price_list.price_of(drink_type) - self.money_in_cents
         if missing_money <= 0:
             self.drink_maker.prepare(Drink(type=drink_type, sugar=self.sugar_level, extra_hot=self.extra_hot))
+            self.sold_products[drink_type] += 1
             self.sugar_level = 0
             self.money_in_cents = 0
         else:
